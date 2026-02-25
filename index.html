@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VibeMap Danang</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#1a262d",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>           
+    <link rel="stylesheet" href="../assets/css/landing-page.css"/>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Navbar -->
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+<div class="glass-panel border-b border-white/5 dark:border-white/5">
+<div class="max-w-[1280px] mx-auto px-6 py-4 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">travel_explore</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tight">VibeMap</h2>
+</div>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors text-slate-600 dark:text-slate-300" href="#">How it Works</a>
+<a class="text-sm font-medium hover:text-primary transition-colors text-slate-600 dark:text-slate-300" href="#">Gallery</a>
+<a class="text-sm font-medium hover:text-primary transition-colors text-slate-600 dark:text-slate-300" href="./login.html">Login</a>
+<a href="./register.html" class="bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2.5 px-5 rounded-lg transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(13,166,242,0.3)]">
+    Start Planning
+</a>
+</div>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex flex-col w-full min-h-screen pt-[72px]">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background-dark z-10"></div>
+<div class="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[20s] hover:scale-105" data-alt="Cinematic night view of Danang Dragon Bridge and skyline" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBK23ZyLV33rH1V4my0JdwkibVB4h4-i1dWf9qZg7bo3UE0PpJBuQT2I-rwjt6Q91xUGZ2IIG0flqh99uttFG43iuaJp9tRYOhDkzlUX7gUcr9M8ZteERkei3O5D-AZZ8mzMpuaCpZJCRONrH7NQBl543LLG7n67q5gB0bmmOWuUb10ZyPkb4jH6H3M5NHV4wGGbr86KzA25LAV9IAecID7oOLZ11h13g5lGN9OZLxyxKm1pjJD8rv_Ft4kL32Z6nRIHajCe1QM2g");'>
+</div>
+</div>
+<div class="relative z-20 container mx-auto px-6 flex flex-col items-center text-center max-w-4xl mt-10">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-medium text-white mb-6 animate-[fadeIn_0.5s_ease-out]">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    AI-Powered Travel Planning
+                </span>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tight text-white mb-6 drop-shadow-xl">
+                    Your Vibe,<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300">Your Voyage</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-200 max-w-2xl font-light leading-relaxed mb-10 drop-shadow-md">
+                    Experience Danang through the lens of your imagination. Our AI creates the perfect trip based on the photos you love.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+<a href="./register.html" class="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white text-base font-bold py-4 px-8 rounded-xl transition-all shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_30px_rgba(13,166,242,0.6)] hover:-translate-y-1">
+    <span>Start Your Journey</span>
+    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+<button class="flex items-center justify-center gap-2 glass-panel hover:bg-white/10 text-white text-base font-bold py-4 px-8 rounded-xl transition-all">
+<span class="material-symbols-outlined text-lg">play_circle</span>
+<span>Watch Demo</span>
+</button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce text-white/50">
+<span class="material-symbols-outlined text-3xl">keyboard_arrow_down</span>
+</div>
+</section>
+<!-- Carousel / Marquee Section -->
+<section class="w-full bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-white/5 py-8 overflow-hidden">
+<div class="container mx-auto px-6 mb-4">
+<p class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Trending Vibes</p>
+</div>
+<div class="flex overflow-x-auto no-scrollbar pb-4 px-6 gap-6 snap-x">
+<!-- Card 1 -->
+<div class="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Neon lights reflecting on wet pavement in a cyberpunk city street" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlNZjYmjsPNXyoXHsZFryZpqPOvkZJ5zkJd21wLLxtHVkFNOj8A-apMXUwld1-oYAhf1RoWowjZUTCjF4ViCqqHEG7bJC9Wo_gURdZ99tlk0y0IPqGiUVbWEhjutIcBNPdgXo_GtCrTFZfbaA7kkIQTOWqEn1XhFFVyfbHVPindOdXu9KxTUIOkuOCC9JB8nDtvF26UwB3FSjxkbDR10iP67z3Oes3TcSFC3MxGYKPLdpYgkcAKGQA0D8USIN4vk0l-rCz-JonOQ");'></div>
+<div class="absolute bottom-3 left-4 z-20">
+<h3 class="text-white font-bold text-lg">Cyberpunk City</h3>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm pl-1">Neon lights &amp; night markets</p>
+</div>
+<!-- Card 2 -->
+<div class="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Serene tropical garden with palm trees and water feature" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUsmvkIimBP6gwX_1WxqFDTRP2PaXbreRdUZoLB66qISpRT8adGU2KUNGls6drZR7IVrPcK8PGDTplYLjYmTq4Qc8GgALeFf6uuWlgTJPChdKdrKYMmzaJC8asP1AW4yf4JazyEyKU7klD_17uOy34eFEcBmHI2UigVE9fThfjmRv8yqa3d3_3aji6j3sZlDIEBArLDXr-5euIfTZbCm7-aooINhXzoAod6I3NM1ipz22X8fEzdTD99CWhJJILeuaEeIw9Ma-ODg");'></div>
+<div class="absolute bottom-3 left-4 z-20">
+<h3 class="text-white font-bold text-lg">Tropical Zen</h3>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm pl-1">Nature, resorts &amp; spa</p>
+</div>
+<!-- Card 3 -->
+<div class="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Ancient temple architecture with intricate details" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0rmI81wn8nnSpZ0s74TS2e2-J56SfKAphPz5CjWTqpF4b50IHc6m1SYm34yD1C0GJbpcz1s3yIm7J-AcpvFcB_426wlyjPg6EaUp3YFUxRPGt3KpiljskE1fRuD9QnVcbBxFAtnwsn4NFImgV1Vfpdwy9V0pG3rNvEJOTmXaqaKlfjb3_iVcVDZ8WQfsIamPv3Zjc0xvqFvvupInX931n952lE2bl8pGD7XHxcXsXOTdNykb6UnGqCR7QhKr8EvDpVJ-0bkJ1DA");'></div>
+<div class="absolute bottom-3 left-4 z-20">
+<h3 class="text-white font-bold text-lg">Historical Soul</h3>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm pl-1">Temples, pagodas &amp; culture</p>
+</div>
+<!-- Card 4 -->
+<div class="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Modern architectural bridge at sunset" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC6pGsUtGPiQkG-h-qe-g21neL0oG5DrEOWqiDc2HnGIxOe82RCAtyRAqNIFQx6WTGhJ1rkptSMh46CqHQ74DmzaOj9dCgdsO6fERgUYRDPUHNtiu1BFuLU-n0UObCaH9N38bIWnBwPE4Y6GO014l09xjLphACijIye4nFLf7cVRm11dS2PPECyftjssbBpKyAA8USuzUNQ54qqmheqbEtBZxxpApEn9fEFMRrZiEMcUrVeznXESwTTxqSOnaidiaq1is5d3Bqzag");'></div>
+<div class="absolute bottom-3 left-4 z-20">
+<h3 class="text-white font-bold text-lg">Modern Marvels</h3>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm pl-1">Architecture &amp; skyscrapers</p>
+</div>
+<!-- Card 5 -->
+<div class="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Vietnamese street food stall with colorful dishes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcstEa_EfYXillFpmHKF2ssDe9imRZkOiPHN-nlDZZ09kmz7lkRj2jgCt4pJN_VfP_rAg0OBlYDaMiCxx7NHoCnMo9aclxTxKoKUSGCrCYqwNkoI65bGoHbHNoS6QT2ePZOlc5mMjkZpznP8ZtmF-ZTVlcA7zoNIPqXfIQ9Jheg_nMSO9IMSLbWpI1ZTMui30H30pmvNN_bBqE1PmLMAV1TUB1cOYZ6INdhcACYtRA281WtRsz5U9m3OS6BVtTyGA3HTj2yNPqGQ");'></div>
+<div class="absolute bottom-3 left-4 z-20">
+<h3 class="text-white font-bold text-lg">Street Eats</h3>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm pl-1">Foodie paradise &amp; local bites</p>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-24 bg-background-light dark:bg-background-dark relative">
+<div class="container mx-auto px-6 relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="max-w-2xl">
+<h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+                            3 Simple Steps to<br/>
+<span class="text-primary">Your Perfect Trip</span>
+</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                            We use advanced Computer Vision to match your visual taste with real-world destinations in Danang. No more generic itineraries.
+                        </p>
+</div>
+<a class="hidden md:flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors" href="#">
+                        Learn more about our AI
+                        <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Step 1 -->
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group shadow-sm hover:shadow-xl hover:shadow-primary/10">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+<span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">1. Upload Aesthetic Photos</h3>
+<p class="text-slate-600 dark:text-slate-400 mb-6">Curate a moodboard of images that inspire you. It can be anything from Pinterest pins to Instagram saves.</p>
+<div class="w-full aspect-[16/9] rounded-lg overflow-hidden relative">
+<div class="absolute inset-0 bg-slate-900/10 dark:bg-white/5 z-10"></div>
+<div class="w-full h-full bg-cover bg-center opacity-80" data-alt="Grid of aesthetic travel photos being uploaded" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnwfGOPz9oEatTACYfbLwwxOdllRD40BJz88HFm9nlxSn_kIdYMzW8EX2AyGiFurM18_9pkq18uwG6j_H5yhGmShA-872B-xr0voKtIzLgDKccoRZYZEDl1s9lDVyiPp3kpdj0-kqynOHpLz8a76DUkEEaAPZpqfmymK0eA58-swZxR5YdjCvQQh_sYbOk3blrap_mFDHdKt0LEGZ9gte2AKJUV-aDnrtkTZDnE4UGg5FocfQlyE4yUyYwss0B8EXLU8Raf1qZAA");'></div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group shadow-sm hover:shadow-xl hover:shadow-primary/10">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary relative">
+<span class="absolute inset-0 rounded-full border border-primary animate-ping opacity-20"></span>
+<span class="material-symbols-outlined text-3xl">view_in_ar</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">2. AI Scans Your Style</h3>
+<p class="text-slate-600 dark:text-slate-400 mb-6">Our AI analyzes patterns, colors, and architectural styles to understand exactly what you are looking for.</p>
+<div class="w-full aspect-[16/9] rounded-lg overflow-hidden relative bg-black">
+<div class="absolute inset-0 bg-primary/20 animate-pulse z-10"></div>
+<!-- Simulated scanning lines -->
+<div class="absolute top-0 left-0 w-full h-1 bg-primary shadow-[0_0_15px_#0da6f2] z-20 animate-[scan_2s_linear_infinite]"></div>
+<div class="w-full h-full bg-cover bg-center opacity-60" data-alt="Abstract visualization of neural network analyzing an image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBlKmMf6VKDc-nVlYpdtutYB7QTojkZNyzL0BZ0Tv1AcN_T7jMp8djeKNWEPk11R7UPmYVH4z7kTTseOHrA8j_CXPGG7obtZKjLtPKuXmFGvYymv0yI2dxQwvxg2f-g-izw6A1MCJaqYcLWSsnQdJfUHo_ldzulOlQBV9OLBZquUcCzBqmcIIq2vC9K2FrGvVyBTN0JlkccLu3SfIalMZYuaV60bonYM-UWkw1F1ewJlLzhdM34IwR2NRH40VF65lwydqqQbVOqg");'></div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group shadow-sm hover:shadow-xl hover:shadow-primary/10">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+<span class="material-symbols-outlined text-3xl">map</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">3. Get Your Unique Itinerary</h3>
+<p class="text-slate-600 dark:text-slate-400 mb-6">Receive a personalized map and plan for Danang that hits all the right spots for your vibe.</p>
+<div class="w-full aspect-[16/9] rounded-lg overflow-hidden relative">
+<div class="absolute bottom-2 right-2 bg-white text-slate-900 text-xs font-bold px-2 py-1 rounded shadow-lg z-20 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary">location_on</span> Danang
+                             </div>
+<div class="w-full h-full bg-cover bg-center" data-alt="Digital map interface with route markers" data-location="Danang" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Q1SWqsaLUe_9u9dyxPMB68iFq6P5vhDRBHHu0Rn5Ly-UlOZH80zO5-nP_XxybDXB401w_zGU2KhT3T_wQ_jyZhWb7TR_-9iQOh1sa8XYqQ2ElDD-VcUlJRFsXbFqui-sGzX5hpNlxdD8Bwuh1sOoA68wBrGgaHG7JEgMfWKtKpNkRYDoM1BJBUjHkHYDGEb09vx-hcLRKn28-WyU4uNh_3-JGDfXRS1ORTQIJAtk3oQuunkCNWc4Nh_pLaH5O0m4XUpIIGsfxg");'></div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center md:hidden">
+<a class="inline-flex items-center gap-2 text-primary font-bold" href="#">
+                        Learn more about our AI
+                        <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="relative py-32 overflow-hidden flex items-center justify-center">
+<!-- Background with overlay -->
+<div class="absolute inset-0 bg-slate-900">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center opacity-30" data-alt="Golden Hands Bridge in Danang on a misty day" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClZu8pjR4lx38YIb8BkJCJCbyOpjPFVpV1xU_AVEWzcZU8eeMuKWXK9CrzG09uU0HXpdfzVG9p5EEMR4BSHo3G40GDtfLfzeyoUkat0QIYzSg5nPkLYCH0wdUUv3mfxWuTk32rrZ74OqJLQtotD5HbOZCgTv5kePz8SOOvoRm0aDquoxDx6oszjY_kyRBocsb5PI6SaGVT4TfYS-cY6R1sBYWeO5g1m-1TGxOepxfwp_qiqAlIc7pwylgqbqgW7C8m_tZi-FQ0NA");'>
+</div>
+</div>
+<div class="relative z-20 text-center px-6 max-w-3xl mx-auto">
+<h2 class="text-4xl md:text-5xl font-black text-white mb-6">Ready to find your vibe?</h2>
+<p class="text-lg md:text-xl text-slate-300 mb-10 font-light">Join thousands of travelers exploring Danang in a whole new way. Your perfect itinerary is just a photo away.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-lg font-bold py-4 px-10 rounded-xl transition-all shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_30px_rgba(13,166,242,0.6)]">
+                        Start Planning Free
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-dark border-t border-white/5 pt-16 pb-8 text-white">
+<div class="container mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="size-6 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">travel_explore</span>
+</div>
+<h2 class="text-xl font-bold">VibeMap</h2>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">
+                        Redefining travel planning with the power of visual AI. Discover Danang like never before.
+                    </p>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-white">Product</h4>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">How it Works</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Features</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Pricing</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Gallery</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-white">Company</h4>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-white">Connect</h4>
+<div class="flex gap-4">
+<a class="size-10 rounded-full bg-white/5 hover:bg-primary hover:text-white flex items-center justify-center transition-all text-slate-400" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="size-10 rounded-full bg-white/5 hover:bg-primary hover:text-white flex items-center justify-center transition-all text-slate-400" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.072 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+<p>© 2024 VibeMap Danang. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- External JavaScript -->
+<script src="../components/landing-page.js" defer></script>
+</body>
+</html>
