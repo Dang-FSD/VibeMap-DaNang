@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "myTrips": "My Trips",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Vibe Check",
+    "subtitle": "Drop a photo to let AI curate your perfect journey.",
+    "upload_placeholder": "Drag & drop your moodboard image here",
+    "upload_button": "Or click to browse",
+    "budget": "Budget",
+    "budget_backpacker": "Backpacker",
+    "budget_luxury": "Luxury",
+    "duration": "Duration (Days)",
+    "analyze_btn": "Analyze My Vibe",
+    "scanning": "AI is scanning your vibe..."
+  }
+}

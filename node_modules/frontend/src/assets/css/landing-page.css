@@ -1,0 +1,36 @@
+/* landing-page.css */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.glass-panel {
+    background: rgba(26, 38, 45, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Hiệu ứng quét ảnh cho AI Section */
+@keyframes scan {
+    0% { top: 0; opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { top: 100%; opacity: 1; }
+}
+
+.animate-scan {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #0da6f2;
+    box-shadow: 0 0 15px #0da6f2;
+    animation: scan 2s linear infinite;
+}

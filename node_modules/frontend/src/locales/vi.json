@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "home": "Trang Chủ",
+    "dashboard": "Bảng Điều Khiển",
+    "myTrips": "Chuyến Đi Của Tôi",
+    "login": "Đăng Nhập",
+    "logout": "Đăng Xuất"
+  },
+  "dashboard": {
+    "title": "Kiểm Tra Vibe",
+    "subtitle": "Thả một bức ảnh để AI lên lịch trình hoàn hảo cho bạn.",
+    "upload_placeholder": "Kéo thả ảnh moodboard của bạn vào đây",
+    "upload_button": "Hoặc bấm để tải lên",
+    "budget": "Ngân sách",
+    "budget_backpacker": "Tiết Kiệm",
+    "budget_luxury": "Sang Chảnh",
+    "duration": "Số ngày đi",
+    "analyze_btn": "Phân Tích Vibe",
+    "scanning": "AI đang quét ảnh của bạn..."
+  }
+}
