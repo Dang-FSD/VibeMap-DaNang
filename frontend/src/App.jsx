@@ -6,6 +6,7 @@ import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import MyTrips from './pages/MyTrips.jsx';
 import Planner from './pages/Planner.jsx';
+import Chatbot from './components/Chatbot.jsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/trips" element={<MyTrips />} />
         <Route path="/planner" element={<Planner />} />
       </Routes>
+      <Chatbot />
     </BrowserRouter>
   );
 }

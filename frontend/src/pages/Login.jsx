@@ -21,6 +21,7 @@ export default function Login() {
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
+      alert(`Login Failed: ${err.message}`);
     } finally {
       setIsLoading(false);
     }

@@ -41,6 +41,19 @@ export const analyzeMoodboard = async (base64Image, duration, budget) => {
   return response.json();
 };
 
+export const chatWithAI = async (messages) => {
+  const response = await fetch(`${API_URL}/ai/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages })
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to chat');
+  }
+  return response.json();
+};
+
 // --- TRIPS ---
 export const saveTrip = async (title, budgetLevel, durationDays, itinerary) => {
   const token = localStorage.getItem('token');

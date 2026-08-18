@@ -1,24 +1,25 @@
-import { analyzeImageVibe } from '../services/aiService.js';
+import { analyzeImageVibe, generateChatResponse } from '../services/aiService.js';
 import { generateItinerary } from '../services/matchingService.js';
 
-export const processMoodboard = async (req, res) => {
+export const analyzeImage = async (req, res) => {
   try {
     const { image, duration, budget } = req.body;
-    
-    if (!image) {
-      return res.status(400).json({ message: 'Image is required' });
-    }
-
-    // 1. Send image to AI to get vibe tags
     const vibes = await analyzeImageVibe(image);
-    console.log('Detected vibes:', vibes);
-
-    // 2. Generate itinerary based on vibes, duration, and budget
-    const itinerary = await generateItinerary(vibes, duration, budget);
-
+    const itinerary = await generateItinerary(vibes, duration || 3, budget || 2);
     res.json({ vibes, itinerary });
   } catch (error) {
-    console.error('AI Processing Error:', error);
-    res.status(500).json({ message: 'Failed to process moodboard' });
+    console.error('Error analyzing image:', error);
+    res.status(500).json({ message: 'Failed to analyze image' });
+  }
+};
+
+export const chat = async (req, res) => {
+  try {
+    const { messages } = req.body;
+    const reply = await generateChatResponse(messages);
+    res.json({ reply });
+  } catch (error) {
+    console.error('Error in chat:', error);
+    res.status(500).json({ message: 'Failed to chat' });
   }
 };

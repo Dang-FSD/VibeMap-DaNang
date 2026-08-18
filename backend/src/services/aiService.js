@@ -45,3 +45,25 @@ export const analyzeImageVibe = async (base64Image) => {
     return ['chill', 'nature', 'cafe']; // Fallback
   }
 };
+
+export const generateChatResponse = async (messages) => {
+  if (!process.env.OPENAI_API_KEY) {
+    return "Xin lỗi, tôi chưa được kết nối với OpenAI API. Bạn vui lòng thêm OPENAI_API_KEY vào biến môi trường để tôi có thể tư vấn các địa điểm ở Đà Nẵng, Hội An và Huế nhé!";
+  }
+
+  try {
+    const systemPrompt = {
+      role: "system",
+      content: "Bạn là một hướng dẫn viên du lịch chuyên nghiệp tại miền Trung Việt Nam. Chuyên tư vấn du lịch Đà Nẵng, Hội An (Quảng Nam), và Thừa Thiên Huế. Trả lời ngắn gọn, thân thiện, súc tích bằng tiếng Việt."
+    };
+    const response = await openai.chat.completions.create({
+      model: process.env.AI_MODEL || "gpt-3.5-turbo",
+      messages: [systemPrompt, ...messages],
+      max_tokens: 250,
+    });
+    return response.choices[0].message.content;
+  } catch (error) {
+    console.error('Error with AI Chat:', error);
+    return "Xin lỗi, hiện tại tôi đang gặp chút sự cố khi kết nối mạng. Bạn thử lại sau nhé!";
+  }
+};
