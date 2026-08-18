@@ -1,0 +1,26 @@
+services:
+  # 1. Backend Service (API)
+  - type: web
+    name: vibemap-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false # Bạn cần dán chuỗi kết nối MongoDB vào Dashboard của Render
+
+  # 2. Frontend Service (Trang web)
+  - type: web
+    name: vibemap-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      # Rewrite tất cả các request về index.html để React Router hoạt động (SPA)
+      - type: rewrite
+        source: /*
+        destination: /index.html
