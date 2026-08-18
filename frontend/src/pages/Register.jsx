@@ -1,7 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../services/api';
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const data = await register(name, email, password);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex min-h-screen w-full flex-col font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden bg-background-light dark:bg-background-dark">
       {/* Navbar */}
@@ -64,19 +96,22 @@ export default function Register() {
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Create Account</h2>
               <p className="text-slate-500 dark:text-slate-400">Join the future of travel planning.</p>
             </div>
-            <form className="space-y-5">
+            
+            {error && <div className="text-red-500 text-sm font-semibold text-center bg-red-100 dark:bg-red-900/30 p-2 rounded">{error}</div>}
+
+            <form className="space-y-5" onSubmit={handleRegister}>
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
-                  <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="John Doe" type="text"/>
+                  <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="John Doe" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Email Address</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">mail</span>
-                  <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="john@example.com" type="email"/>
+                  <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="john@example.com" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -84,25 +119,25 @@ export default function Register() {
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
-                    <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password"/>
+                    <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Confirm Password</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">shield_lock</span>
-                    <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password"/>
+                    <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3 py-2">
-                <input className="size-5 rounded-md border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" id="terms" type="checkbox"/>
+                <input className="size-5 rounded-md border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" id="terms" type="checkbox" required />
                 <label className="text-sm text-slate-600 dark:text-slate-400" htmlFor="terms">
                   I agree to the <a className="text-primary hover:underline" href="#">Terms of Service</a> and <a className="text-primary hover:underline" href="#">Privacy Policy</a>.
                 </label>
               </div>
-              <button className="w-full h-14 bg-primary text-white font-bold rounded-xl shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_35px_rgba(13,166,242,0.6)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group" type="submit">
-                <span>Create Account</span>
+              <button disabled={isLoading} className="w-full h-14 bg-primary text-white font-bold rounded-xl shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_35px_rgba(13,166,242,0.6)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group disabled:opacity-70" type="submit">
+                <span>{isLoading ? 'Creating...' : 'Create Account'}</span>
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </button>
             </form>

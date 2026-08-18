@@ -1,7 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../services/api';
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    
+    try {
+      const data = await login(email, password);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex h-screen w-full font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden bg-background-light dark:bg-background-dark">
       {/* Left Side: Cinematic Image Section */}
@@ -57,13 +81,20 @@ export default function Login() {
               <span className="bg-background-light dark:bg-background-dark px-2 text-slate-500">Or continue with email</span>
             </div>
           </div>
+          
+          {error && <div className="text-red-500 text-sm font-semibold text-center">{error}</div>}
+
           {/* Form */}
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">Email Address</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">mail</span>
-                <input className="w-full pl-12 pr-4 py-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-500" id="email" placeholder="name@example.com" type="email"/>
+                <input 
+                  className="w-full pl-12 pr-4 py-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-500" 
+                  id="email" placeholder="name@example.com" type="email"
+                  value={email} onChange={(e) => setEmail(e.target.value)} required
+                />
               </div>
             </div>
             <div className="space-y-2">
@@ -73,7 +104,11 @@ export default function Login() {
               </div>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">lock</span>
-                <input className="w-full pl-12 pr-12 py-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-500" id="password" placeholder="••••••••" type="password"/>
+                <input 
+                  className="w-full pl-12 pr-12 py-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-500" 
+                  id="password" placeholder="••••••••" type="password"
+                  value={password} onChange={(e) => setPassword(e.target.value)} required
+                />
                 <button className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" type="button">
                   <span className="material-symbols-outlined text-lg">visibility</span>
                 </button>
@@ -83,8 +118,8 @@ export default function Login() {
               <input className="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-900" id="remember" type="checkbox"/>
               <label className="text-sm text-slate-600 dark:text-slate-400" htmlFor="remember">Remember me for 30 days</label>
             </div>
-            <button className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-primary/40 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group" type="submit">
-              Sign In
+            <button disabled={isLoading} className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-primary/40 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group disabled:opacity-70" type="submit">
+              {isLoading ? 'Signing In...' : 'Sign In'}
               <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
           </form>

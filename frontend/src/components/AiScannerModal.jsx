@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function AiScannerModal({ isOpen, onClose, onComplete }) {
+export default function AiScannerModal({ isOpen }) {
   const { t } = useTranslation();
   const [progress, setProgress] = useState(0);
 
@@ -10,19 +10,16 @@ export default function AiScannerModal({ isOpen, onClose, onComplete }) {
       setProgress(0);
       const interval = setInterval(() => {
         setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-              onComplete();
-            }, 500);
-            return 100;
+          // Fake progress up to 95%, waiting for real API to finish and close modal
+          if (prev >= 95) {
+            return 95;
           }
-          return prev + Math.floor(Math.random() * 15) + 5;
+          return prev + Math.floor(Math.random() * 10) + 2;
         });
-      }, 300);
+      }, 500);
       return () => clearInterval(interval);
     }
-  }, [isOpen, onComplete]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

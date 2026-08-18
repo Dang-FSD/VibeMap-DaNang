@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Timeline from '../components/Planner/Timeline';
 import DynamicMap from '../components/Map/DynamicMap';
-import { ArrowLeft, Share2, Download } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Share2, Download, Save } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const mockItinerary = [
   {
     day: 1,
     locations: [
-      { name: 'Cầu Rồng (Dragon Bridge)', category: 'Landmark', duration: '1 hour', description: 'Biểu tượng của thành phố Đà Nẵng, đặc biệt đẹp vào ban đêm với màn phun lửa và nước cuối tuần.', coordinates: [16.0611, 108.2268] },
-      { name: 'Chợ Hàn (Han Market)', category: 'Shopping', duration: '2 hours', description: 'Chợ truyền thống sầm uất nhất Đà Nẵng, nơi tuyệt vời để thử đặc sản địa phương và mua quà lưu niệm.', coordinates: [16.0680, 108.2238] },
-      { name: 'Bãi biển Mỹ Khê', category: 'Nature / Beach', duration: '3 hours', description: 'Một trong những bãi biển quyến rũ nhất hành tinh với dải cát trắng mịn màng.', coordinates: [16.0620, 108.2483] }
-    ]
-  },
-  {
-    day: 2,
-    locations: [
-      { name: 'Bà Nà Hills', category: 'Attraction', duration: '6 hours', description: 'Khu du lịch trên núi với Cầu Vàng nổi tiếng thế giới và Làng Pháp cổ kính.', coordinates: [15.9984, 107.9897] },
-      { name: 'Bán đảo Sơn Trà', category: 'Nature', duration: '3 hours', description: 'Lá phổi xanh của thành phố, nơi có Chùa Linh Ứng và tượng Phật Bà Quan Âm cao nhất Việt Nam.', coordinates: [16.1218, 108.2750] }
+      { name: 'Cầu Rồng (Dragon Bridge)', category: 'Landmark', duration: '1 hour', description: 'Biểu tượng của thành phố Đà Nẵng.', coordinates: [16.0611, 108.2268] }
     ]
   }
 ];
@@ -26,11 +17,17 @@ const mockItinerary = [
 const Planner = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedLocation, setSelectedLocation] = useState(mockItinerary[0].locations[0].coordinates);
+  const location = useLocation();
+  
+  // Get real data from state, or fallback to mock
+  const itinerary = location.state?.itinerary || mockItinerary;
+  const vibes = location.state?.vibes || ['chill'];
+
+  const [selectedLocation, setSelectedLocation] = useState(itinerary[0]?.locations[0]?.coordinates || [16.0544, 108.2022]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState('0-0');
 
   // Flatten locations for the map
-  const allLocations = mockItinerary.flatMap(day => day.locations);
+  const allLocations = itinerary.flatMap(day => day.locations);
 
   const handleLocationSelect = (coordinates, index) => {
     setSelectedLocation(coordinates);
@@ -70,13 +67,32 @@ const Planner = () => {
         {/* Left Column: Timeline (Scrollable) */}
         <div className="w-full lg:w-2/5 h-[50vh] lg:h-[calc(100vh-64px)] overflow-y-auto p-4 lg:p-8 styled-scrollbar">
           <div className="max-w-xl mx-auto">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-white mb-2">Your Itinerary</h2>
-              <p className="text-gray-400">Perfectly crafted based on your selected vibes.</p>
+            <div className="mb-8 flex justify-between items-end">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">Your Itinerary</h2>
+                <div className="flex gap-2 flex-wrap mt-2">
+                  {vibes.map((vibe, idx) => (
+                    <span key={idx} className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border border-primary/30">
+                      {vibe}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <button onClick={async () => {
+                try {
+                  const { saveTrip } = await import('../services/api');
+                  await saveTrip('My Danang Trip', 2, itinerary.length, itinerary);
+                  alert('Trip saved successfully!');
+                } catch (e) {
+                  alert(e.message || 'Failed to save trip. Are you logged in?');
+                }
+              }} className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg transition-transform hover:scale-105">
+                <Save size={16} /> Save Trip
+              </button>
             </div>
             
             <Timeline 
-              days={mockItinerary} 
+              days={itinerary} 
               onLocationSelect={handleLocationSelect}
               selectedLocationIndex={selectedLocationIndex}
             />

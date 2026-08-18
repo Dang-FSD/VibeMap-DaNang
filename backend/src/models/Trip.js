@@ -8,8 +8,11 @@ const tripSchema = new mongoose.Schema({
   itinerary: [{
     day: { type: Number },
     locations: [{
-      location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
-      timeFrame: { type: String } // e.g., 'Morning', 'Afternoon', 'Evening'
+      name: String,
+      category: String,
+      duration: String,
+      description: String,
+      coordinates: [Number]
     }]
   }]
 }, { timestamps: true });
