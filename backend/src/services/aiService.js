@@ -92,6 +92,8 @@ Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt đị
 3. Độ sâu kiến thức: Hạn chế đề xuất chung chung. Hãy chỉ đích danh (ví dụ: "Uống cà phê ở Reaching Out Teahouse").
 4. Tính xác thực: Chỉ đề xuất địa điểm CÓ THẬT tại Đà Nẵng, Hội An, Huế.
 5. Toạ độ (Coordinates): AI phải ước lượng hoặc cung cấp chính xác [vĩ độ, kinh độ] của địa điểm để bản đồ render.
+6. Quy tắc Độc bản (Zero-Repetition Rule): TUYỆT ĐỐI KHÔNG lặp lại bất kỳ địa điểm nào trong toàn bộ lịch trình. Mỗi nhà hàng, quán cafe, bãi biển hay danh thắng chỉ được xuất hiện ĐÚNG MỘT LẦN duy nhất. Nếu đã đề xuất "Bãi biển Mỹ Khê" ở Ngày 1, tuyệt đối không nhắc lại ở Ngày 2 hay Ngày 3. Bạn phải khai thác triệt để các địa điểm ngách để lấp đầy lịch trình.
+7. Nhịp độ trải nghiệm (Vibe Pacing): Không xếp 2 địa điểm có cùng một tính chất nằm sát nhau (Ví dụ: Không xếp 2 quán cafe liên tiếp, hoặc 2 ngôi chùa liên tiếp). Hãy xen kẽ luân phiên các hoạt động (ví dụ: Thưởng thức Cafe -> Khám phá thiên nhiên/Kiến trúc -> Trải nghiệm Ẩm thực -> Mua sắm/Văn hóa) để giữ nhịp độ chuyến đi luôn mới mẻ, đa dạng nhưng vẫn tuân thủ đúng "Vibe" gốc. Tận dụng tối đa không gian địa lý mở rộng của cả Đà Nẵng, Huế và Hội An để phân bổ điểm đến.
 
 [Định dạng Output BẮT BUỘC (Chỉ trả về JSON, không Markdown, không giải thích)]
 {
