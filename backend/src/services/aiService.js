@@ -137,7 +137,20 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
 
     const content = response.choices[0].message.content;
     const parsedData = JSON.parse(content);
-    return parsedData.itinerary;
+    
+    // Đảm bảo map đúng key mà Frontend (Timeline.jsx) cần
+    const formattedItinerary = parsedData.itinerary.map(day => ({
+      day: day.day,
+      locations: day.locations.map(loc => ({
+        name: loc.name,
+        category: loc.category,
+        duration: loc.time_spent || loc.duration || loc.session || "2 hours",
+        description: loc.description,
+        coordinates: loc.coordinates
+      }))
+    }));
+    
+    return formattedItinerary;
   } catch (error) {
     console.error('Error generating AI Itinerary:', error);
     return null;
