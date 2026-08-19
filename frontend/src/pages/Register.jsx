@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { register } from '../services/api';
 
 export default function Register() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,10 +31,15 @@ export default function Register() {
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
-      alert(`Registration Failed: ${err.message}`);
+      alert(`${t('auth.register_failed')} ${err.message}`);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === 'en' ? 'vi' : 'en';
+    i18n.changeLanguage(newLang);
   };
 
   return (
@@ -50,12 +57,17 @@ export default function Register() {
         </div>
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-8">
-            <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">Home</Link>
-            <a className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Explore</a>
-            <a className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Itineraries</a>
+            <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">{t('nav.home')}</Link>
+            <a className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">{t('nav.explore')}</a>
+            <a className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">{t('nav.itineraries')}</a>
           </nav>
+
+          <button onClick={handleLanguageToggle} className="px-3 py-1 rounded-md bg-slate-200 dark:bg-slate-800 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700">
+            {i18n.language.toUpperCase()}
+          </button>
+
           <Link to="/login" className="hidden md:flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary/10 text-primary hover:bg-primary/20 text-sm font-bold transition-all">
-            Login
+            {t('nav.login')}
           </Link>
         </div>
       </header>
@@ -75,10 +87,10 @@ export default function Register() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
-              Map your vibe in <span className="text-primary">Danang</span>.
+              {t('home.title_part1')} <br/><span className="text-primary">{t('home.title_part2')}</span>.
             </h1>
             <p className="text-slate-300 text-lg leading-relaxed mb-8">
-              Our AI analyzes your visual preferences to curate the perfect beach, mountain, and city adventure.
+              {t('home.steps_desc')}
             </p>
             <div className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10">
               <div className="flex -space-x-2">
@@ -94,22 +106,22 @@ export default function Register() {
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 lg:p-20 bg-background-light dark:bg-background-dark">
           <div className="w-full max-w-[440px] space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Create Account</h2>
-              <p className="text-slate-500 dark:text-slate-400">Join the future of travel planning.</p>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{t('auth.create_account')}</h2>
+              <p className="text-slate-500 dark:text-slate-400">{t('auth.join_future')}</p>
             </div>
             
             {error && <div className="text-red-500 text-sm font-semibold text-center bg-red-100 dark:bg-red-900/30 p-2 rounded">{error}</div>}
 
             <form className="space-y-5" onSubmit={handleRegister}>
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">{t('auth.full_name')}</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
                   <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="John Doe" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Email Address</label>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">{t('auth.email')}</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">mail</span>
                   <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="john@example.com" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -117,14 +129,14 @@ export default function Register() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">{t('auth.password')}</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
                     <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Confirm Password</label>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">{t('auth.confirm_password')}</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">shield_lock</span>
                     <input className="w-full pl-12 pr-4 h-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 transition-all outline-none" placeholder="••••••••" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
@@ -134,17 +146,17 @@ export default function Register() {
               <div className="flex items-center gap-3 py-2">
                 <input className="size-5 rounded-md border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" id="terms" type="checkbox" required />
                 <label className="text-sm text-slate-600 dark:text-slate-400" htmlFor="terms">
-                  I agree to the <a className="text-primary hover:underline" href="#">Terms of Service</a> and <a className="text-primary hover:underline" href="#">Privacy Policy</a>.
+                  {t('auth.agree_terms')}
                 </label>
               </div>
               <button disabled={isLoading} className="w-full h-14 bg-primary text-white font-bold rounded-xl shadow-[0_0_20px_rgba(13,166,242,0.4)] hover:shadow-[0_0_35px_rgba(13,166,242,0.6)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 group disabled:opacity-70" type="submit">
-                <span>{isLoading ? 'Creating...' : 'Create Account'}</span>
+                <span>{isLoading ? t('auth.creating_btn') : t('auth.create_btn')}</span>
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </button>
             </form>
             <div className="relative py-4 flex items-center">
               <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
-              <span className="flex-shrink mx-4 text-sm text-slate-500 font-medium">Or sign up with</span>
+              <span className="flex-shrink mx-4 text-sm text-slate-500 font-medium">{t('auth.or_signup_with')}</span>
               <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -158,7 +170,7 @@ export default function Register() {
               </button>
             </div>
             <p className="text-center text-sm text-slate-600 dark:text-slate-400">
-              Already have an account? <Link className="text-primary font-bold hover:underline ml-1" to="/login">Sign In</Link>
+              {t('auth.already_have_account')} <Link className="text-primary font-bold hover:underline ml-1" to="/login">{t('auth.sign_in')}</Link>
             </p>
           </div>
         </div>

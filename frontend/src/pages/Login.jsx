@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { login } from '../services/api';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,14 +23,26 @@ export default function Login() {
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
-      alert(`Login Failed: ${err.message}`);
+      alert(`${t('auth.login_failed')} ${err.message}`);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleLanguageToggle = () => {
+    const newLang = i18n.language === 'en' ? 'vi' : 'en';
+    i18n.changeLanguage(newLang);
+  };
+
   return (
     <div className="flex h-screen w-full font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden bg-background-light dark:bg-background-dark">
+      {/* Absolute Language Toggle */}
+      <div className="absolute top-6 right-6 z-50">
+        <button onClick={handleLanguageToggle} className="px-3 py-1 rounded-md bg-white/20 backdrop-blur-md dark:bg-slate-800/50 font-bold hover:bg-white/40 dark:hover:bg-slate-700/50 transition-colors text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700">
+          {i18n.language.toUpperCase()}
+        </button>
+      </div>
+
       {/* Left Side: Cinematic Image Section */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Cinematic Danang skyline at night with blue lights" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0BDXC_kNU_g-xx8Kxs9zePTbqGxzL4pR2VvAHHcsIBSC8JVx7dpJJ5fVW9UCYwf4rmHqwFb0zsQS1a9XqZcxntfKxwsD0h0PusB1SHCvc0lgareuI0PQ2uj5yncJEW6o6m_tUhcb_Yaw3tLtcrBjZwQDL1n7xFG308tsdM5DdexjQu3IH4oLWH6c9_JfjV9uIPbO0DvTc-ipH1hJAmESSQjnlzMiXiU3XBXTCkuwaMRdUJjKIR9thq43aB_9eKqrzSYsoeQqCKg')" }}>
@@ -43,10 +57,10 @@ export default function Login() {
             <h1 className="text-2xl font-bold tracking-tight text-white">VibeMap Danang</h1>
           </div>
           <h2 className="text-4xl font-extrabold leading-tight text-white mb-4">
-            Visualize your journey <br/> with AI precision.
+            {t('home.title_part1')} <br/> {t('home.title_part2')}.
           </h2>
           <p className="text-slate-300 text-lg">
-            Experience personalized itineraries powered by Computer Vision and Generative AI.
+            {t('home.steps_desc')}
           </p>
         </div>
       </div>
@@ -55,12 +69,14 @@ export default function Login() {
         <div className="w-full max-w-md space-y-8">
           {/* Mobile Logo (Visible only on small screens) */}
           <div className="lg:hidden flex items-center gap-2 mb-8 justify-center">
-            <span className="material-symbols-outlined text-primary text-4xl">explore</span>
+            <Link to="/">
+              <span className="material-symbols-outlined text-primary text-4xl">explore</span>
+            </Link>
             <span className="text-2xl font-bold dark:text-white">VibeMap Danang</span>
           </div>
           <div className="space-y-2">
-            <h3 className="text-3xl font-bold tracking-tight dark:text-slate-100">Welcome Back</h3>
-            <p className="text-slate-500 dark:text-slate-400">Please enter your details to sign in.</p>
+            <h3 className="text-3xl font-bold tracking-tight dark:text-slate-100">{t('auth.welcome_back')}</h3>
+            <p className="text-slate-500 dark:text-slate-400">{t('auth.enter_details')}</p>
           </div>
           {/* Social Logins */}
           <div className="grid grid-cols-3 gap-4">
@@ -79,7 +95,7 @@ export default function Login() {
               <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background-light dark:bg-background-dark px-2 text-slate-500">Or continue with email</span>
+              <span className="bg-background-light dark:bg-background-dark px-2 text-slate-500">{t('auth.or_continue')}</span>
             </div>
           </div>
           
@@ -88,7 +104,7 @@ export default function Login() {
           {/* Form */}
           <form className="space-y-6" onSubmit={handleLogin}>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">Email Address</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">{t('auth.email')}</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">mail</span>
                 <input 
@@ -100,8 +116,8 @@ export default function Login() {
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="password">Password</label>
-                <a className="text-xs font-semibold text-primary hover:underline" href="#">Forgot password?</a>
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="password">{t('auth.password')}</label>
+                <a className="text-xs font-semibold text-primary hover:underline" href="#">{t('auth.forgot_password')}</a>
               </div>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">lock</span>
@@ -117,21 +133,21 @@ export default function Login() {
             </div>
             <div className="flex items-center space-x-2">
               <input className="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-900" id="remember" type="checkbox"/>
-              <label className="text-sm text-slate-600 dark:text-slate-400" htmlFor="remember">Remember me for 30 days</label>
+              <label className="text-sm text-slate-600 dark:text-slate-400" htmlFor="remember">{t('auth.remember_me')}</label>
             </div>
             <button disabled={isLoading} className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-primary/40 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group disabled:opacity-70" type="submit">
-              {isLoading ? 'Signing In...' : 'Sign In'}
+              {isLoading ? t('auth.signing_in') : t('auth.sign_in')}
               <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
           </form>
           <p className="text-center text-slate-600 dark:text-slate-400 text-sm">
-            Don't have an account? 
-            <Link className="text-primary font-bold hover:underline ml-1" to="/register">Sign Up</Link>
+            {t('auth.dont_have_account')} 
+            <Link className="text-primary font-bold hover:underline ml-1" to="/register">{t('auth.sign_up')}</Link>
           </p>
         </div>
         {/* Footer Small Link */}
         <div className="absolute bottom-8 text-xs text-slate-500 dark:text-slate-600">
-          © 2024 VibeMap Danang. Powered by AI Vision.
+          {t('home.footer')}
         </div>
       </div>
     </div>
