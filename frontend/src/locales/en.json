@@ -12,8 +12,10 @@
     "upload_placeholder": "Drag & drop your moodboard image here",
     "upload_button": "Or click to browse",
     "budget": "Budget",
-    "budget_backpacker": "Backpacker",
-    "budget_luxury": "Luxury",
+    "budget_level_1": "Level 1: Under 500k VND/day (Backpacker)",
+    "budget_level_2": "Level 2: 500k - 1.5M VND/day (Standard)",
+    "budget_level_3": "Level 3: 1.5M - 3M VND/day (Comfortable)",
+    "budget_level_4": "Level 4: Over 3M VND/day (Luxury)",
     "duration": "Duration (Days)",
     "analyze_btn": "Analyze My Vibe",
     "scanning": "AI is scanning your vibe..."

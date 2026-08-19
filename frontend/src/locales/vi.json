@@ -12,8 +12,10 @@
     "upload_placeholder": "Kéo thả ảnh moodboard của bạn vào đây",
     "upload_button": "Hoặc bấm để tải lên",
     "budget": "Ngân sách",
-    "budget_backpacker": "Tiết Kiệm",
-    "budget_luxury": "Sang Chảnh",
+    "budget_level_1": "Mức 1: Dưới 500k VNĐ/ngày (Tiết Kiệm)",
+    "budget_level_2": "Mức 2: 500k - 1tr5 VNĐ/ngày (Cơ Bản)",
+    "budget_level_3": "Mức 3: 1tr5 - 3tr VNĐ/ngày (Thoải Mái)",
+    "budget_level_4": "Mức 4: Trên 3tr VNĐ/ngày (Sang Chảnh)",
     "duration": "Số ngày đi",
     "analyze_btn": "Phân Tích Vibe",
     "scanning": "AI đang quét ảnh của bạn..."

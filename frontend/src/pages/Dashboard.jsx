@@ -90,9 +90,8 @@ export default function Dashboard() {
             <div>
               <label className="block text-sm font-semibold mb-4">{t('dashboard.budget')}</label>
               <input type="range" min="1" max="4" value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full accent-primary" />
-              <div className="flex justify-between text-xs text-slate-500 mt-2">
-                <span>{t('dashboard.budget_backpacker')}</span>
-                <span>{t('dashboard.budget_luxury')}</span>
+              <div className="text-center font-bold text-primary mt-3 text-sm bg-primary/10 py-2 rounded-lg border border-primary/20">
+                {t(`dashboard.budget_level_${budget}`)}
               </div>
             </div>
             <div>
