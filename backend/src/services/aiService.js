@@ -131,28 +131,33 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
         { role: "user", content: userPrompt }
       ],
       response_format: { type: "json_object" }, // Ensures valid JSON response
-      max_tokens: 2000,
+      max_tokens: 8000,
       temperature: 0.7,
     });
 
     const content = response.choices[0].message.content;
-    const parsedData = JSON.parse(content);
-    
-    // Đảm bảo map đúng key mà Frontend (Timeline.jsx) cần
-    const formattedItinerary = parsedData.itinerary.map(day => ({
-      day: day.day,
-      locations: day.locations.map(loc => ({
-        name: loc.name,
-        category: loc.category,
-        duration: loc.time_spent || loc.duration || loc.session || "2 hours",
-        description: loc.description,
-        coordinates: loc.coordinates
-      }))
-    }));
-    
-    return formattedItinerary;
+    try {
+      const parsedData = JSON.parse(content);
+      
+      // Đảm bảo map đúng key mà Frontend (Timeline.jsx) cần
+      const formattedItinerary = parsedData.itinerary.map(day => ({
+        day: day.day,
+        locations: day.locations.map(loc => ({
+          name: loc.name,
+          category: loc.category,
+          duration: loc.time_spent || loc.duration || loc.session || "2 hours",
+          description: loc.description,
+          coordinates: loc.coordinates
+        }))
+      }));
+      
+      return formattedItinerary;
+    } catch (parseError) {
+      console.error('Failed to parse AI JSON. Truncated output?', content);
+      throw parseError;
+    }
   } catch (error) {
-    console.error('Error generating AI Itinerary:', error);
+    console.error('Error generating AI Itinerary:', error.message || error);
     return null;
   }
 };
