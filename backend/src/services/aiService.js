@@ -22,7 +22,7 @@ export const analyzeImageVibe = async (base64Image) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama-3.2-90b-vision-preview' : (process.env.AI_MODEL || 'gpt-4o'), 
+      model: isGroq ? 'llama-3.2-11b-vision-preview' : (process.env.AI_MODEL || 'gpt-4o'), 
       messages: [
         {
           role: 'user',
@@ -62,7 +62,7 @@ export const generateChatResponse = async (messages) => {
       content: "Bạn là một hướng dẫn viên du lịch chuyên nghiệp tại miền Trung Việt Nam. Chuyên tư vấn du lịch Đà Nẵng, Hội An (Quảng Nam), và Thừa Thiên Huế. Trả lời ngắn gọn, thân thiện, súc tích bằng tiếng Việt."
     };
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama3-8b-8192' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
+      model: isGroq ? 'llama-3.3-70b-versatile' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
       messages: [systemPrompt, ...messages],
       max_tokens: 250,
     });
@@ -118,7 +118,7 @@ Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt đị
 
   try {
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama3-8b-8192' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
+      model: isGroq ? 'llama-3.3-70b-versatile' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
