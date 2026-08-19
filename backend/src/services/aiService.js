@@ -135,9 +135,13 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
       temperature: 0.7,
     });
 
-    const content = response.choices[0].message.content;
+    let cleanContent = response.choices[0].message.content;
+    
+    // Strip markdown formatting if AI mistakenly wrapped it
+    cleanContent = cleanContent.replace(/```json/g, '').replace(/```/g, '').trim();
+
     try {
-      const parsedData = JSON.parse(content);
+      const parsedData = JSON.parse(cleanContent);
       
       // Đảm bảo map đúng key mà Frontend (Timeline.jsx) cần
       const formattedItinerary = parsedData.itinerary.map(day => ({
@@ -153,7 +157,7 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
       
       return formattedItinerary;
     } catch (parseError) {
-      console.error('Failed to parse AI JSON. Truncated output?', content);
+      console.error('Failed to parse AI JSON. Truncated output?', cleanContent);
       throw parseError;
     }
   } catch (error) {
