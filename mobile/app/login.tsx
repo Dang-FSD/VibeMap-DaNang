@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../src/context/AuthContext';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Login() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function Login() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
+      <StatusBar style="light" />
       <View style={styles.formContainer}>
         <Text style={styles.headerTitle}>Welcome Back</Text>
         <Text style={styles.headerSubtitle}>Enter your details to sign in</Text>
@@ -91,7 +93,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#020617', // Deep dark
   },
   formContainer: {
     flex: 1,
@@ -99,38 +101,49 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#0f172a',
+    fontSize: 36,
+    fontWeight: '900',
+    color: '#ffffff',
     marginBottom: 8,
+    textShadowColor: '#22d3ee',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#94a3b8',
     marginBottom: 32,
   },
   errorText: {
-    color: '#ef4444',
+    color: '#f43f5e',
     marginBottom: 16,
-    fontWeight: '500',
+    fontWeight: '600',
+    textShadowColor: 'rgba(244, 63, 94, 0.5)',
+    textShadowRadius: 8,
   },
   inputGroup: {
     marginBottom: 20,
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#334155',
+    fontWeight: '700',
+    color: '#38bdf8', // Neon cyan label
     marginBottom: 8,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#0f172a',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#334155',
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    color: '#0f172a',
+    color: '#f8fafc',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   loginButton: {
     backgroundColor: '#0ea5e9',
@@ -138,11 +151,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 8,
   },
   loginButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   footer: {
     flexDirection: 'row',
@@ -150,12 +172,14 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
   footerText: {
-    color: '#64748b',
+    color: '#94a3b8',
     fontSize: 15,
   },
   footerLink: {
-    color: '#0ea5e9',
+    color: '#ec4899', // Neon pink for links
     fontSize: 15,
     fontWeight: 'bold',
+    textShadowColor: 'rgba(236, 72, 153, 0.4)',
+    textShadowRadius: 8,
   },
 });

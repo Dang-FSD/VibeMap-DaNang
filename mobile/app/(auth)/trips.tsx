@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { getMyTrips } from '../../src/services/api';
 import { Calendar, Map } from 'lucide-react-native';
 
@@ -43,6 +44,7 @@ export default function MyTrips() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <StatusBar style="light" />
       <Text style={styles.header}>My Trips</Text>
 
       {trips.length === 0 ? (
@@ -84,7 +86,7 @@ export default function MyTrips() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#020617', // Deep space dark
   },
   content: {
     padding: 24,
@@ -93,79 +95,106 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#020617',
   },
   header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#0f172a',
+    fontSize: 32,
+    fontWeight: '900',
+    color: '#ffffff',
     marginBottom: 24,
+    textShadowColor: '#22d3ee',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   emptyContainer: {
     padding: 40,
     alignItems: 'center',
     borderWidth: 2,
     borderStyle: 'dashed',
-    borderColor: '#cbd5e1',
-    borderRadius: 16,
+    borderColor: '#334155', // Darker dash
+    borderRadius: 20,
+    backgroundColor: 'rgba(15, 23, 42, 0.5)',
   },
   emptyText: {
     fontSize: 16,
-    color: '#64748b',
-    marginBottom: 16,
+    color: '#94a3b8',
+    marginBottom: 24,
     textAlign: 'center',
   },
   btn: {
     backgroundColor: '#0ea5e9',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    elevation: 5,
   },
   btnText: {
     color: '#fff',
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    backgroundColor: 'rgba(15, 23, 42, 0.7)',
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(34, 211, 238, 0.2)',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 3,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#334155',
-    marginBottom: 16,
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#f8fafc',
+    marginBottom: 20,
   },
   statsRow: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   stat: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 20,
+    backgroundColor: 'rgba(34, 211, 238, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
   statText: {
     marginLeft: 8,
     fontSize: 14,
-    color: '#64748b',
-    fontWeight: '500',
+    color: '#38bdf8', // Neon cyan text
+    fontWeight: '700',
   },
   viewBtn: {
-    backgroundColor: '#0ea5e9',
+    backgroundColor: 'transparent',
     padding: 16,
     borderRadius: 12,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ec4899', // Neon pink border
+    shadowColor: '#ec4899',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 3,
   },
   viewBtnText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
+    color: '#ec4899', // Neon pink text
+    fontWeight: '900',
     fontSize: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   }
 });

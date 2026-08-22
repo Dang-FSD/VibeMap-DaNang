@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { analyzeMoodboard } from '../../src/services/api';
 
 const MOODS = ['chill', 'adventurous', 'romantic', 'cultural', 'party'];
@@ -72,6 +73,7 @@ export default function Dashboard() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <StatusBar style="light" />
       <Text style={styles.header}>Plan Your Vibe</Text>
       <Text style={styles.subheader}>Tell us what you're looking for</Text>
 
@@ -83,6 +85,7 @@ export default function Dashboard() {
             keyboardType="numeric"
             value={durationDays}
             onChangeText={setDurationDays}
+            placeholderTextColor="#64748b"
           />
         </View>
         <View style={styles.inputGroup}>
@@ -92,6 +95,7 @@ export default function Dashboard() {
             keyboardType="numeric"
             value={budgetVND}
             onChangeText={setBudgetVND}
+            placeholderTextColor="#64748b"
           />
         </View>
 
@@ -121,91 +125,115 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#020617', // Dark space background
   },
   content: {
     padding: 24,
     paddingBottom: 60,
   },
   header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#0f172a',
+    fontSize: 32,
+    fontWeight: '900',
+    color: '#ffffff',
     marginBottom: 4,
+    textShadowColor: '#22d3ee',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   subheader: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#94a3b8',
     marginBottom: 24,
   },
   card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
+    backgroundColor: 'rgba(15, 23, 42, 0.6)',
+    borderRadius: 20,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(34, 211, 238, 0.2)',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 5,
     marginBottom: 24,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#334155',
+    fontWeight: '700',
+    color: '#38bdf8', // Neon cyan label
     marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   input: {
+    backgroundColor: '#0f172a',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 10,
-    padding: 12,
+    borderColor: '#334155',
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
-    backgroundColor: '#f8fafc',
+    color: '#f8fafc',
+    shadowColor: '#ec4899',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   pillContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   pillScroll: {
     flexDirection: 'row',
   },
   pill: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: '#f1f5f9',
-    marginRight: 8,
+    backgroundColor: '#0f172a',
+    marginRight: 12,
     borderWidth: 1,
-    borderColor: 'transparent',
+    borderColor: '#334155',
   },
   pillSelected: {
-    backgroundColor: '#e0f2fe',
-    borderColor: '#38bdf8',
+    backgroundColor: 'rgba(236, 72, 153, 0.1)', // Light neon pink bg
+    borderColor: '#ec4899', // Neon pink border
+    shadowColor: '#ec4899',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
+    elevation: 5,
   },
   pillText: {
     color: '#64748b',
-    fontWeight: '500',
+    fontWeight: '600',
   },
   pillTextSelected: {
-    color: '#0369a1',
+    color: '#fbcfe8',
     fontWeight: 'bold',
+    textShadowColor: '#ec4899',
+    textShadowRadius: 5,
   },
   generateButton: {
-    backgroundColor: '#0ea5e9',
+    backgroundColor: '#22d3ee', // Bright Cyan button
     padding: 18,
     borderRadius: 16,
     alignItems: 'center',
-    shadowColor: '#0ea5e9',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    borderWidth: 1,
+    borderColor: '#67e8f9',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10,
   },
   generateButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: '#082f49', // Dark text for contrast on cyan
+    fontSize: 18,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   }
 });

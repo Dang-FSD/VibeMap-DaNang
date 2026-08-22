@@ -1,20 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <ImageBackground 
-      source={{ uri: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=2128&auto=format&fit=crop' }} 
+      source={{ uri: 'https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?q=80&w=2128&auto=format&fit=crop' }} 
       style={styles.background}
     >
+      <StatusBar style="light" />
       <View style={styles.overlay} />
       <SafeAreaView style={styles.container}>
         <View style={styles.content}>
           <Text style={styles.title}>VibeMap Danang</Text>
-          <Text style={styles.subtitle}>Curate your perfect Central Vietnam journey based on your vibe.</Text>
+          <Text style={styles.subtitle}>Curate your perfect journey with our advanced AI interface.</Text>
           
           <View style={styles.buttonContainer}>
             <TouchableOpacity 
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(15, 23, 42, 0.7)',
+    backgroundColor: 'rgba(2, 6, 23, 0.8)', // Deep space dark overlay
   },
   container: {
     flex: 1,
@@ -54,17 +56,25 @@ const styles = StyleSheet.create({
   },
   content: {
     marginBottom: 40,
+    backgroundColor: 'rgba(15, 23, 42, 0.4)', // Glassmorphism container
+    padding: 24,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(34, 211, 238, 0.2)', // Faint cyan border
   },
   title: {
     fontSize: 42,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#ffffff',
     marginBottom: 12,
+    textShadowColor: '#22d3ee',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 15,
   },
   subtitle: {
-    fontSize: 18,
-    color: '#cbd5e1',
-    lineHeight: 26,
+    fontSize: 16,
+    color: '#94a3b8',
+    lineHeight: 24,
     marginBottom: 40,
   },
   buttonContainer: {
@@ -75,27 +85,39 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     borderRadius: 16,
     alignItems: 'center',
-    shadowColor: '#0ea5e9',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: '#38bdf8',
   },
   primaryButtonText: {
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   secondaryButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(15, 23, 42, 0.8)',
     paddingVertical: 18,
     borderRadius: 16,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: '#ec4899', // Neon pink border
+    shadowColor: '#ec4899',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 5,
   },
   secondaryButtonText: {
-    color: '#ffffff',
+    color: '#ec4899',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
 });

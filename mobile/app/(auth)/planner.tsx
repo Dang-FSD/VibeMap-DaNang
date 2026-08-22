@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { saveTrip } from '../../src/services/api';
 
 export default function Planner() {
@@ -44,6 +45,7 @@ export default function Planner() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.header}>Your Custom Itinerary</Text>
         {data.vibes && (
@@ -80,16 +82,17 @@ export default function Planner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#020617', // Deep space dark
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#020617',
   },
   emptyText: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#94a3b8',
     marginBottom: 16,
   },
   btn: {
@@ -97,73 +100,93 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 5,
   },
   btnText: {
     color: '#fff',
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   content: {
     padding: 16,
     paddingBottom: 100,
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#0f172a',
+    fontSize: 28,
+    fontWeight: '900',
+    color: '#ffffff',
+    textShadowColor: '#22d3ee',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   subheader: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#38bdf8',
     marginBottom: 20,
+    fontWeight: '700',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   dayCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
+    backgroundColor: 'rgba(15, 23, 42, 0.7)',
+    borderRadius: 20,
     padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(236, 72, 153, 0.3)', // Neon pink hint
+    shadowColor: '#ec4899',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 3,
   },
   dayTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0ea5e9',
-    marginBottom: 16,
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#ec4899', // Neon pink title
+    marginBottom: 20,
+    textShadowColor: 'rgba(236, 72, 153, 0.5)',
+    textShadowRadius: 8,
   },
   activityItem: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 24,
   },
   time: {
-    width: 60,
-    fontSize: 12,
+    width: 65,
+    fontSize: 13,
     fontWeight: 'bold',
-    color: '#64748b',
+    color: '#22d3ee', // Cyan time
     marginTop: 2,
   },
   actContent: {
     flex: 1,
     borderLeftWidth: 2,
-    borderLeftColor: '#e2e8f0',
-    paddingLeft: 12,
+    borderLeftColor: '#38bdf8', // Neon cyan border
+    paddingLeft: 16,
+    position: 'relative',
   },
   actName: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#334155',
+    fontWeight: '800',
+    color: '#f8fafc',
+    marginBottom: 4,
   },
   actLocation: {
     fontSize: 12,
-    color: '#0ea5e9',
-    marginBottom: 4,
+    color: '#f472b6',
+    fontWeight: '600',
+    marginBottom: 8,
+    textTransform: 'uppercase',
   },
   actDesc: {
     fontSize: 14,
-    color: '#64748b',
-    lineHeight: 20,
+    color: '#cbd5e1',
+    lineHeight: 22,
   },
   footer: {
     position: 'absolute',
@@ -171,19 +194,28 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgba(2, 6, 23, 0.85)',
     borderTopWidth: 1,
-    borderTopColor: '#e2e8f0',
+    borderTopColor: 'rgba(34, 211, 238, 0.2)',
   },
   saveButton: {
     backgroundColor: '#0ea5e9',
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+    shadowColor: '#22d3ee',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10,
   },
   saveButtonText: {
     color: '#ffffff',
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontSize: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   }
 });
