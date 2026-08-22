@@ -14,15 +14,14 @@ async function checkModel(modelName) {
       messages: [{ role: "user", content: "Hi" }],
       max_tokens: 10,
     });
-    console.log(`Success with model ${modelName}`);
+    console.log(`Success with model ${modelName}:`, res.choices[0].message.content);
   } catch (err) {
     console.error(`Error with model ${modelName}:`, err.message);
   }
 }
 
 async function run() {
-  await checkModel('llama-3.3-70b-versatile');
-  await checkModel('llama-3.1-70b-versatile');
-  await checkModel('llama3-70b-8192');
+  await checkModel('openai/gpt-oss-20b');
+  await checkModel('openai/gpt-oss-120b');
 }
 run();
