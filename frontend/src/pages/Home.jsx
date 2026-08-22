@@ -76,7 +76,7 @@ export default function Home() {
           <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 z-0">
                   <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background-dark z-10"></div>
-                  <div className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[20s] hover:scale-105" data-alt="Cinematic night view of Danang Dragon Bridge and skyline" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1588665046200-e14fc75330e7?q=80&w=2000&auto=format&fit=crop")' }}></div>
+                  <div className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[20s] hover:scale-105" data-alt="Cinematic night view of Danang Dragon Bridge and skyline" style={{ backgroundImage: 'url("/images/CauRong.jpg")' }}></div>
               </div>
               <div className="relative z-20 container mx-auto px-6 flex flex-col items-center text-center max-w-4xl mt-10">
                   <span data-aos="fade-down" className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-medium text-white mb-6">
@@ -121,7 +121,7 @@ export default function Home() {
                   <div className="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
                       <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
-                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1627917246419-583be55ee980?q=80&w=800&auto=format&fit=crop")' }}></div>
+                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("/images/DaNangToanCanh-3.jpg")' }}></div>
                           <div className="absolute bottom-3 left-4 z-20">
                               <h3 className="text-white font-bold text-lg">{t('home.cyberpunk_title')}</h3>
                           </div>
@@ -131,7 +131,7 @@ export default function Home() {
                   <div className="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
                       <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
-                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1540202404-b9b56f8f176b?q=80&w=800&auto=format&fit=crop")' }}></div>
+                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("/images/BienMyKhe.jpg")' }}></div>
                           <div className="absolute bottom-3 left-4 z-20">
                               <h3 className="text-white font-bold text-lg">{t('home.zen_title')}</h3>
                           </div>
@@ -141,7 +141,7 @@ export default function Home() {
                   <div className="snap-center shrink-0 w-[280px] md:w-[320px] group cursor-pointer">
                       <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-lg">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity"></div>
-                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1559592442-741eaf7397b6?q=80&w=800&auto=format&fit=crop")' }}></div>
+                          <div className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" style={{ backgroundImage: 'url("/images/CauVang_BaNa.jpg")' }}></div>
                           <div className="absolute bottom-3 left-4 z-20">
                               <h3 className="text-white font-bold text-lg">{t('home.historical_title')}</h3>
                           </div>
@@ -194,7 +194,7 @@ export default function Home() {
           <section className="relative py-32 overflow-hidden flex items-center justify-center">
               <div className="absolute inset-0 bg-slate-900">
                   <div className="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
-                  <div className="w-full h-full bg-cover bg-center opacity-30" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1588665046200-e14fc75330e7?q=80&w=2000&auto=format&fit=crop")' }}></div>
+                  <div className="w-full h-full bg-cover bg-center opacity-30" style={{ backgroundImage: 'url("/images/BienNonNuoc.jpg")' }}></div>
               </div>
               <div className="relative z-20 text-center px-6 max-w-3xl mx-auto" data-aos="zoom-in">
                   <h2 className="text-4xl md:text-5xl font-black text-white mb-6">{t('home.ready_title')}</h2>

@@ -51,7 +51,7 @@ export default function Login() {
 
       {/* Left Side: Cinematic Image Section */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Cinematic Danang skyline at night with blue lights" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0BDXC_kNU_g-xx8Kxs9zePTbqGxzL4pR2VvAHHcsIBSC8JVx7dpJJ5fVW9UCYwf4rmHqwFb0zsQS1a9XqZcxntfKxwsD0h0PusB1SHCvc0lgareuI0PQ2uj5yncJEW6o6m_tUhcb_Yaw3tLtcrBjZwQDL1n7xFG308tsdM5DdexjQu3IH4oLWH6c9_JfjV9uIPbO0DvTc-ipH1hJAmESSQjnlzMiXiU3XBXTCkuwaMRdUJjKIR9thq43aB_9eKqrzSYsoeQqCKg')" }}>
+        <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Cinematic Danang skyline at night with blue lights" style={{ backgroundImage: "url('/images/DaNangToanCanh-3.jpg')" }}>
         </div>
         {/* Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
