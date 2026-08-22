@@ -3,7 +3,7 @@ import { generateItinerary as generateMockItinerary } from '../services/matching
 
 export const analyzeImage = async (req, res) => {
   try {
-    const { image, duration, durationDays, budgetVND, mood, preferences } = req.body;
+    const { image, duration, durationDays, budgetVND, mood, preferences, language } = req.body;
     
     // Ensure we have a valid duration number
     const finalDuration = durationDays || duration || 3;
@@ -27,7 +27,7 @@ export const analyzeImage = async (req, res) => {
     }
     
     // 2. Generate Smart Itinerary using AI directly
-    let itinerary = await generateAIItinerary(vibes, finalDuration, finalBudget, preferences);
+    let itinerary = await generateAIItinerary(vibes, finalDuration, finalBudget, preferences, language || 'vi');
     
     // 3. Fallback to Mock if AI fails
     if (!itinerary) {

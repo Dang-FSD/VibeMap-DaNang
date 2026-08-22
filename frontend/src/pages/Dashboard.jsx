@@ -49,7 +49,8 @@ export default function Dashboard() {
         durationDays,
         budgetVND: Number(budgetVND),
         mood,
-        preferences
+        preferences,
+        language: i18n.language || 'vi'
       };
       const result = await analyzeMoodboard(payload);
       // Navigate to planner with the result
@@ -78,6 +79,12 @@ export default function Dashboard() {
             </button>
             <button onClick={() => navigate('/')} className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               {t('nav.home')}
+            </button>
+            <button 
+              onClick={() => { localStorage.removeItem('token'); localStorage.removeItem('user'); navigate('/'); }} 
+              className="px-4 py-2 rounded-lg border border-red-300 dark:border-red-700/50 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            >
+              {i18n.language === 'en' ? 'Logout' : 'Đăng xuất'}
             </button>
           </div>
         </header>

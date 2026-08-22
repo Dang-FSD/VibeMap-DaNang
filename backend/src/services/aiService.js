@@ -79,7 +79,7 @@ export const generateChatResponse = async (messages, language = 'vi') => {
   }
 };
 
-export const generateAIItinerary = async (vibes, durationDays, budgetVND, preferences) => {
+export const generateAIItinerary = async (vibes, durationDays, budgetVND, preferences, language = 'vi') => {
   if (apiKey === 'dummy_key') {
     console.warn("No API key provided, falling back to mock itinerary.");
     return null; // Return null so the controller can fallback if needed, or handle it there.
@@ -93,13 +93,13 @@ export const generateAIItinerary = async (vibes, durationDays, budgetVND, prefer
 - Mục tiêu chính: ${preferences.primaryGoal || 'Khám phá'}
 ` : '';
 
-  const systemPrompt = `
+const systemPromptVi = `
 [Vai trò của bạn]
 Bạn là bộ não gợi ý cốt lõi của VibeMap - một chuyên gia thiết kế lịch trình du lịch bản địa sắc sảo, chuyên sâu về Đà Nẵng, Hội An và Huế. Kiến thức của bạn vượt ra khỏi những điểm du lịch đại trà; bạn am hiểu tường tận các "hidden gems" (viên ngọc ẩn), các quán cafe ngách, kiến trúc đặc thù, quán ăn địa phương và các địa điểm có tính thẩm mỹ cao.
 
 [Nhiệm vụ]
 Người dùng sẽ cung cấp các "Vibe Tags", "Số ngày" (Duration), "Ngân sách chính xác" (Budget), và các "Sở thích cá nhân" (Preferences).
-Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt địa lý, tuân thủ NGHIÊM NGẶT ngân sách, độ tuổi, người đi cùng, và khớp 100% với Vibe đó.
+Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt địa lý, tuân thủ NGHIÊM NGẶT ngân sách, độ tuổi, người đi cùng, và khớp 100% với Vibe đó. Lịch trình PHẢI ĐƯỢC VIẾT BẰNG TIẾNG VIỆT.
 
 [Quy tắc & Ràng buộc cực kỳ quan trọng]
 1. TUÂN THỦ NGÂN SÁCH CHÍNH XÁC (ZERO-BUDGET-TOLERANCE): 
@@ -129,7 +129,7 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
           "session": "Buổi sáng",
           "time_spent": "2 hours",
           "name": "Tên địa điểm cụ thể",
-          "description": "Lý do khớp vibe, sở thích và ngân sách",
+          "description": "Lý do khớp vibe, sở thích và ngân sách (Bằng Tiếng Việt)",
           "category": "Cafe | Nature | Architecture | Food | Culture",
           "estimated_cost": "Số tiền dự kiến (VD: 150.000 VNĐ)",
           "coordinates": [16.0544, 108.2022]
@@ -140,8 +140,57 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
 }
 `;
 
+const systemPromptEn = `
+[Your Role]
+You are the core recommendation brain of VibeMap - a local travel expert specializing in Danang, Hoi An, and Hue. Your knowledge goes beyond tourist traps; you intimately know hidden gems, aesthetic cafes, unique architecture, and local spots.
+
+[Task]
+The user will provide "Vibe Tags", "Duration", "Exact Budget", and "Preferences".
+You must generate a detailed, geographically logical itinerary that STRICTLY adheres to the budget, age group, companions, and matches the Vibe 100%. The itinerary MUST BE WRITTEN IN ENGLISH.
+
+[Critical Constraints & Rules]
+1. ZERO-BUDGET-TOLERANCE: 
+   - The provided budget is PER PERSON PER DAY.
+   - If budget < 500,000 VND: ONLY suggest FREE attractions (beaches, pagodas, markets) and street food. DO NOT suggest Ba Na Hills, VinWonders, or expensive bars.
+   - If budget > 5,000,000 VND: Include Fine Dining, 5-6 star resorts, premium services.
+2. ADHERE TO PREFERENCES:
+   - Dietary: If Vegan/Vegetarian, DO NOT SUGGEST SEAFOOD OR BEEF. Suggest specific vegan restaurants.
+   - Companions: If "Family", NO loud bars/pubs at night. Prioritize parks, family restaurants.
+   - Pace: If "Relaxed", 2-3 spots/day. If "Fast-packed", 4-5 spots/day.
+3. Geographic Logic: Locations in the same DAY MUST be in the same city or close vicinity to optimize travel time.
+4. Deep Knowledge: Provide exact [latitude, longitude] for every location.
+5. ZERO-REPETITION: The entire itinerary must use 100% NEW locations. Do not repeat any place.
+
+[MANDATORY Output Format]
+DO NOT USE MARKDOWN. RETURN A PURE JSON STRING IN EXACTLY THIS STRUCTURE:
+{
+  "trip_title": "Trip Title",
+  "vibe_match_score": 98,
+  "itinerary": [
+    {
+      "day": 1,
+      "locations": [
+        {
+          "session": "Morning",
+          "time_spent": "2 hours",
+          "name": "Exact Location Name",
+          "description": "Why it matches the vibe and budget (IN ENGLISH)",
+          "category": "Cafe | Nature | Architecture | Food | Culture",
+          "estimated_cost": "Estimated cost (e.g. 150,000 VND)",
+          "coordinates": [16.0544, 108.2022]
+        }
+      ]
+    }
+  ]
+}
+`;
+
+  const systemPrompt = language === 'en' ? systemPromptEn : systemPromptVi;
+
   const formattedBudget = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(budgetVND);
-  const userPrompt = `Tạo lịch trình ${durationDays} ngày. Ngân sách BẮT BUỘC MỖI NGÀY LÀ: ${formattedBudget}. Vibe tags: ${vibes.join(', ')}. Sở thích cá nhân: ${prefsText}. Hãy xuất ra JSON thuần túy.`;
+  const userPromptVi = `Tạo lịch trình ${durationDays} ngày. Ngân sách BẮT BUỘC MỖI NGÀY LÀ: ${formattedBudget}. Vibe tags: ${vibes.join(', ')}. Sở thích cá nhân: ${prefsText}. Hãy xuất ra JSON thuần túy.`;
+  const userPromptEn = `Generate a ${durationDays} days itinerary. EXACT BUDGET PER DAY IS: ${formattedBudget}. Vibe tags: ${vibes.join(', ')}. Preferences: ${prefsText}. Output pure JSON.`;
+  const userPrompt = language === 'en' ? userPromptEn : userPromptVi;
 
   try {
     const response = await openai.chat.completions.create({

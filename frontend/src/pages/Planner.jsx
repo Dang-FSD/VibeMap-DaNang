@@ -22,7 +22,7 @@ const Toast = ({ message, visible }) => (
 );
 
 const Planner = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -58,6 +58,27 @@ const Planner = () => {
     }
   };
 
+  const handleDownload = () => {
+    let content = `VibeMap Danang - Custom Itinerary\n=================================\n\n`;
+    itinerary.forEach(day => {
+      content += `Day ${day.day}\n---------------------------------\n`;
+      day.locations.forEach(loc => {
+        content += `- ${loc.name} (${loc.duration})\n  ${loc.category} | ${loc.description}\n\n`;
+      });
+    });
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'VibeMap_Danang_Itinerary.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(i18n.language === 'en' ? 'Itinerary downloaded!' : 'Đã tải lịch trình!');
+  };
+
   const handleSaveTrip = async () => {
     try {
       const { saveTrip } = await import('../services/api');
@@ -88,7 +109,7 @@ const Planner = () => {
             <button onClick={handleShare} className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors tooltip-trigger" title={t('planner.share')}>
               <Share2 size={18} />
             </button>
-            <button className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors tooltip-trigger" title={t('planner.export')}>
+            <button onClick={handleDownload} className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors tooltip-trigger" title={t('planner.export')}>
               <Download size={18} />
             </button>
           </div>
