@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <ImageBackground 
-      source={require('../assets/images/icon.png')} 
+      source={require('../assets/images/danang-bg.jpg')} 
       style={styles.background}
       resizeMode="cover"
     >
