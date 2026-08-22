@@ -8,8 +8,9 @@ export default function Home() {
 
   return (
     <ImageBackground 
-      source={{ uri: 'https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?q=80&w=2128&auto=format&fit=crop' }} 
+      source={require('../assets/images/icon.png')} 
       style={styles.background}
+      resizeMode="cover"
     >
       <StatusBar style="light" />
       <View style={styles.overlay} />
