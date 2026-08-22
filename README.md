@@ -114,7 +114,7 @@ npm run dev
 ```bash
 cd mobile
 npm install
-npx expo start
+npx expo start -c
 ```
 *(Use the Expo Go app on iOS/Android to scan the QR code).*
 
@@ -230,6 +230,6 @@ npm run dev
 ```bash
 cd mobile
 npm install
-npx expo start
+npx expo start -c
 ```
 *(Sử dụng ứng dụng Expo Go trên iOS/Android để quét mã QR và chạy app trên điện thoại).*
