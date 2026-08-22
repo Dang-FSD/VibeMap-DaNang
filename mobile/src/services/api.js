@@ -1,6 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000/api';
+import Constants from 'expo-constants';
+
+// Use environment variable if set, otherwise try to detect Expo dev server IP, fallback to localhost
+let API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000/api';
+
+if (!process.env.EXPO_PUBLIC_API_URL && Constants.expoConfig?.hostUri) {
+  const hostIp = Constants.expoConfig.hostUri.split(':')[0];
+  API_URL = `http://${hostIp}:5000/api`;
+}
+
 
 // --- AUTHENTICATION ---
 export const login = async (email, password) => {
