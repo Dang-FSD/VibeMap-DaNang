@@ -62,7 +62,7 @@ export const generateChatResponse = async (messages) => {
       content: "Bạn là một hướng dẫn viên du lịch chuyên nghiệp tại miền Trung Việt Nam. Chuyên tư vấn du lịch Đà Nẵng, Hội An (Quảng Nam), và Thừa Thiên Huế. Trả lời ngắn gọn, thân thiện, súc tích bằng tiếng Việt."
     };
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama-3.3-70b-versatile' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
+      model: isGroq ? 'llama3-70b-8192' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
       messages: [systemPrompt, ...messages],
       max_tokens: 250,
     });
@@ -139,7 +139,7 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
 
   try {
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama-3.3-70b-versatile' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
+      model: isGroq ? 'llama3-70b-8192' : (process.env.AI_MODEL || "gpt-3.5-turbo"),
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
