@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -26,28 +26,48 @@ const MapUpdater = ({ center }) => {
   return null;
 };
 
+// Component to fix grey tile issue
+const MapInvalidator = () => {
+  const map = useMap();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [map]);
+  return null;
+};
+
 const DynamicMap = ({ locations, selectedLocation }) => {
   // Center defaults to Da Nang
   const defaultCenter = [16.0544, 108.2022];
   const center = selectedLocation || (locations.length > 0 ? locations[0].coordinates : defaultCenter);
+  const [mapRendered, setMapRendered] = useState(false);
+
+  useEffect(() => {
+    setMapRendered(true);
+  }, []);
 
   return (
-    <div className="h-full w-full rounded-2xl overflow-hidden shadow-lg border border-white/20">
-      <MapContainer center={center} zoom={13} style={{ height: '100%', width: '100%' }}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {locations.map((loc, idx) => (
-          <Marker key={idx} position={loc.coordinates}>
-            <Popup>
-              <div className="font-semibold text-gray-800">{loc.name}</div>
-              <div className="text-sm text-gray-600">{loc.category}</div>
-            </Popup>
-          </Marker>
-        ))}
-        {selectedLocation && <MapUpdater center={selectedLocation} />}
-      </MapContainer>
+    <div className="h-full w-full rounded-2xl overflow-hidden shadow-lg border border-white/20 relative z-0">
+      {mapRendered && (
+        <MapContainer center={center} zoom={13} style={{ height: '100%', width: '100%' }}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {locations.map((loc, idx) => (
+            <Marker key={idx} position={loc.coordinates}>
+              <Popup>
+                <div className="font-semibold text-gray-800">{loc.name}</div>
+                <div className="text-sm text-gray-600">{loc.category}</div>
+              </Popup>
+            </Marker>
+          ))}
+          {selectedLocation && <MapUpdater center={selectedLocation} />}
+          <MapInvalidator />
+        </MapContainer>
+      )}
     </div>
   );
 };

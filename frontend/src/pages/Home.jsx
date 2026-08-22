@@ -69,7 +69,7 @@ export default function Home() {
                       {t('home.ai_powered')}
                   </span>
                   <h1 data-aos="fade-up" data-aos-delay="200" className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tight text-white mb-6 drop-shadow-xl">
-                      {t('home.title_part1')}<br/>
+                      <span className="whitespace-nowrap">{t('home.title_part1')}</span><br/>
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300">{t('home.title_part2')}</span>
                   </h1>
                   <p data-aos="fade-up" data-aos-delay="400" className="text-lg md:text-xl text-slate-200 max-w-2xl font-light leading-relaxed mb-10 drop-shadow-md">

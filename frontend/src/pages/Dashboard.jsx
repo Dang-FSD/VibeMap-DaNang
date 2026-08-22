@@ -112,7 +112,7 @@ export default function Dashboard() {
               <div className="absolute inset-0">
                 <img src={imageBase64} alt="Uploaded moodboard" className="w-full h-full object-cover opacity-60" />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <span className="text-white font-bold text-xl">Change Image</span>
+                  <span className="text-white font-bold text-xl">{t('dashboard.change_image')}</span>
                 </div>
               </div>
             ) : (
@@ -127,91 +127,91 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             {/* Core Settings */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">Trip Settings</h3>
+              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">{t('dashboard.trip_settings')}</h3>
               
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <label className="block text-sm font-semibold mb-2">Start Date</label>
+                  <label className="block text-sm font-semibold mb-2">{t('dashboard.start_date')}</label>
                   <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none" />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-semibold mb-2">End Date</label>
+                  <label className="block text-sm font-semibold mb-2">{t('dashboard.end_date')}</label>
                   <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">Budget per day (VND)</label>
+                <label className="block text-sm font-semibold mb-2">{t('dashboard.budget_per_day')}</label>
                 <div className="relative">
                   <input type="number" min="0" step="100000" value={budgetVND} onChange={(e) => setBudgetVND(e.target.value)} className="w-full p-3 pl-4 pr-16 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none font-bold" />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">VNĐ</span>
                 </div>
-                <p className="text-xs text-slate-500 mt-2">Example: 1500000 = 1.5 Million VND / day</p>
+                <p className="text-xs text-slate-500 mt-2">{t('dashboard.budget_example')}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2">Current Mood</label>
+                <label className="block text-sm font-semibold mb-2">{t('dashboard.current_mood')}</label>
                 <select value={mood} onChange={(e) => setMood(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none">
-                  <option value="chill">Chill & Relaxing</option>
-                  <option value="adventurous">Adventurous & Active</option>
-                  <option value="romantic">Romantic & Intimate</option>
-                  <option value="cultural">Cultural & Historic</option>
-                  <option value="party">Nightlife & Party</option>
+                  <option value="chill">{t('dashboard.moods.chill')}</option>
+                  <option value="adventurous">{t('dashboard.moods.adventurous')}</option>
+                  <option value="romantic">{t('dashboard.moods.romantic')}</option>
+                  <option value="cultural">{t('dashboard.moods.cultural')}</option>
+                  <option value="party">{t('dashboard.moods.party')}</option>
                 </select>
               </div>
             </div>
 
             {/* Travel Preferences */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">Travel Preferences</h3>
+              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">{t('dashboard.travel_preferences')}</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Who's traveling?</label>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">{t('dashboard.whos_traveling')}</label>
                   <select name="companion" value={preferences.companion} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
-                    <option value="solo">Solo</option>
-                    <option value="couple">Couple</option>
-                    <option value="family">Family (with kids/elders)</option>
-                    <option value="friends">Group of Friends</option>
+                    <option value="solo">{t('dashboard.companions.solo')}</option>
+                    <option value="couple">{t('dashboard.companions.couple')}</option>
+                    <option value="family">{t('dashboard.companions.family')}</option>
+                    <option value="friends">{t('dashboard.companions.friends')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Pace</label>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">{t('dashboard.pace')}</label>
                   <select name="pace" value={preferences.pace} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
-                    <option value="relaxed">Relaxed (2-3 places/day)</option>
-                    <option value="moderate">Moderate</option>
-                    <option value="fast">Fast-packed (Explore all!)</option>
+                    <option value="relaxed">{t('dashboard.paces.relaxed')}</option>
+                    <option value="moderate">{t('dashboard.paces.moderate')}</option>
+                    <option value="fast">{t('dashboard.paces.fast')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Dietary</label>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">{t('dashboard.dietary')}</label>
                   <select name="dietary" value={preferences.dietary} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
-                    <option value="none">No restrictions</option>
-                    <option value="vegetarian">Vegetarian</option>
-                    <option value="vegan">Vegan</option>
-                    <option value="halal">Halal</option>
-                    <option value="no-seafood">Seafood Allergy</option>
+                    <option value="none">{t('dashboard.diets.none')}</option>
+                    <option value="vegetarian">{t('dashboard.diets.vegetarian')}</option>
+                    <option value="vegan">{t('dashboard.diets.vegan')}</option>
+                    <option value="halal">{t('dashboard.diets.halal')}</option>
+                    <option value="no-seafood">{t('dashboard.diets.no_seafood')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Transport</label>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">{t('dashboard.transport')}</label>
                   <select name="transport" value={preferences.transport} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
-                    <option value="motorbike">Motorbike Rental</option>
-                    <option value="grab">Taxi / Grab</option>
-                    <option value="walking">Walking / Bicycle</option>
+                    <option value="motorbike">{t('dashboard.transports.motorbike')}</option>
+                    <option value="grab">{t('dashboard.transports.grab')}</option>
+                    <option value="walking">{t('dashboard.transports.walking')}</option>
                   </select>
                 </div>
                 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Primary Goal</label>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">{t('dashboard.primary_goal')}</label>
                   <select name="primaryGoal" value={preferences.primaryGoal} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
-                    <option value="exploration">Exploration & Sightseeing</option>
-                    <option value="relaxation">Relaxation & Healing</option>
-                    <option value="food">Food Tour</option>
-                    <option value="photography">Photography / Check-ins</option>
+                    <option value="exploration">{t('dashboard.goals.exploration')}</option>
+                    <option value="relaxation">{t('dashboard.goals.relaxation')}</option>
+                    <option value="food">{t('dashboard.goals.food')}</option>
+                    <option value="photography">{t('dashboard.goals.photography')}</option>
                   </select>
                 </div>
               </div>
