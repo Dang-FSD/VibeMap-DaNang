@@ -44,8 +44,8 @@ export const analyzeImage = async (req, res) => {
 
 export const chat = async (req, res) => {
   try {
-    const { messages } = req.body;
-    const reply = await generateChatResponse(messages);
+    const { messages, language } = req.body;
+    const reply = await generateChatResponse(messages, language);
     res.json({ reply });
   } catch (error) {
     console.error('Error in chat:', error);

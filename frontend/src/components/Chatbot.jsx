@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { chatWithAI } from '../services/api';
 import { Send, X, MessageSquare, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { useTranslation } from 'react-i18next';
 
 export default function Chatbot() {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Chào bạn! Mình là AI hỗ trợ du lịch miền Trung. Bạn cần tìm địa điểm nào ở Đà Nẵng, Hội An hay Huế không?' }
+    { role: 'assistant', content: i18n.language === 'en' ? 'Hello! I am your AI travel assistant. Need any recommendations for Da Nang, Hoi An, or Hue?' : 'Chào bạn! Mình là AI hỗ trợ du lịch miền Trung. Bạn cần tìm địa điểm nào ở Đà Nẵng, Hội An hay Huế không?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +24,14 @@ export default function Chatbot() {
     }
   }, [messages, isOpen]);
 
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].role === 'assistant') {
+      setMessages([
+        { role: 'assistant', content: i18n.language === 'en' ? 'Hello! I am your AI travel assistant. Need any recommendations for Da Nang, Hoi An, or Hue?' : 'Chào bạn! Mình là AI hỗ trợ du lịch miền Trung. Bạn cần tìm địa điểm nào ở Đà Nẵng, Hội An hay Huế không?' }
+      ]);
+    }
+  }, [i18n.language]);
+
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -33,11 +43,11 @@ export default function Chatbot() {
 
     try {
       const history = [...messages, userMessage].map(m => ({ role: m.role, content: m.content }));
-      const response = await chatWithAI(history);
+      const response = await chatWithAI(history, i18n.language);
       
       setMessages(prev => [...prev, { role: 'assistant', content: response.reply }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Xin lỗi, kết nối bị lỗi. Vui lòng thử lại sau.' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: i18n.language === 'en' ? 'Sorry, connection error. Please try again later.' : 'Xin lỗi, kết nối bị lỗi. Vui lòng thử lại sau.' }]);
     } finally {
       setIsLoading(false);
     }
@@ -104,7 +114,7 @@ export default function Chatbot() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything..."
+              placeholder={i18n.language === 'en' ? "Ask me anything..." : "Nhập câu hỏi của bạn..."}
               className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary dark:text-white"
             />
             <button 

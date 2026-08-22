@@ -51,15 +51,21 @@ export const analyzeImageVibe = async (base64Image) => {
   }
 };
 
-export const generateChatResponse = async (messages) => {
+export const generateChatResponse = async (messages, language = 'vi') => {
   if (apiKey === 'dummy_key') {
-    return "Xin lỗi, tôi chưa được kết nối với API (OpenAI/Groq). Bạn vui lòng cấu hình API Key vào biến môi trường để tôi có thể tư vấn các địa điểm ở Đà Nẵng, Hội An và Huế nhé!";
+    return language === 'en' 
+      ? "Sorry, I am not connected to the AI API yet. Please configure the API Key." 
+      : "Xin lỗi, tôi chưa được kết nối với API (OpenAI/Groq). Bạn vui lòng cấu hình API Key vào biến môi trường để tôi có thể tư vấn các địa điểm ở Đà Nẵng, Hội An và Huế nhé!";
   }
 
   try {
+    const systemPromptContent = language === 'en'
+      ? "You are a professional local travel guide in Central Vietnam (Danang, Hoi An, Hue). Reply in English in a friendly, enthusiastic manner to recommend places to eat, visit, and explore. CRITICAL INSTRUCTION: DO NOT USE MARKDOWN TABLES to reply. Use simple bullet points, clear line breaks, and keep it concise and easy to read on a small chat interface."
+      : "Bạn là một hướng dẫn viên du lịch chuyên nghiệp tại miền Trung Việt Nam (Đà Nẵng, Hội An, Huế). Hãy trả lời người dùng một cách thân thiện, tư vấn các địa điểm ăn uống, vui chơi nhiệt tình. LƯU Ý QUAN TRỌNG: KHÔNG ĐƯỢC DÙNG BẢNG (TABLE) TRONG MARKDOWN để trả lời. Hãy dùng danh sách gạch đầu dòng (bullet points) đơn giản, xuống dòng rõ ràng, và trình bày ngắn gọn, dễ đọc trên giao diện chat nhỏ.";
+
     const systemPrompt = {
       role: "system",
-      content: "Bạn là một hướng dẫn viên du lịch chuyên nghiệp tại miền Trung Việt Nam (Đà Nẵng, Hội An, Huế). Hãy trả lời người dùng một cách thân thiện, tư vấn các địa điểm ăn uống, vui chơi nhiệt tình. LƯU Ý QUAN TRỌNG: KHÔNG ĐƯỢC DÙNG BẢNG (TABLE) TRONG MARKDOWN để trả lời. Hãy dùng danh sách gạch đầu dòng (bullet points) đơn giản, xuống dòng rõ ràng, và trình bày ngắn gọn, dễ đọc trên giao diện chat nhỏ."
+      content: systemPromptContent
     };
     const response = await openai.chat.completions.create({
       model: isGroq ? 'openai/gpt-oss-120b' : (process.env.AI_MODEL || "gpt-3.5-turbo"),

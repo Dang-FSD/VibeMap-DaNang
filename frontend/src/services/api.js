@@ -41,11 +41,11 @@ export const analyzeMoodboard = async (payload) => {
   return response.json();
 };
 
-export const chatWithAI = async (messages) => {
+export const chatWithAI = async (messages, language = 'vi') => {
   const response = await fetch(`${API_URL}/ai/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages })
+    body: JSON.stringify({ messages, language })
   });
   
   if (!response.ok) {
