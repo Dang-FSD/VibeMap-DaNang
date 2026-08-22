@@ -73,37 +73,40 @@ export const generateChatResponse = async (messages) => {
   }
 };
 
-export const generateAIItinerary = async (vibes, durationDays, budgetLevel) => {
+export const generateAIItinerary = async (vibes, durationDays, budgetVND, preferences) => {
   if (apiKey === 'dummy_key') {
     console.warn("No API key provided, falling back to mock itinerary.");
     return null; // Return null so the controller can fallback if needed, or handle it there.
   }
 
-  const budgetMap = {
-    1: "Mức 1: Dưới 500.000 VNĐ/người/ngày (Rất tiết kiệm, sinh viên)",
-    2: "Mức 2: 500.000 - 1.500.000 VNĐ/người/ngày (Trung bình, du lịch bụi)",
-    3: "Mức 3: 1.500.000 - 3.000.000 VNĐ/người/ngày (Thoải mái, hưởng thụ)",
-    4: "Mức 4: Trên 3.000.000 VNĐ/người/ngày (Sang chảnh, cao cấp)"
-  };
-  const budgetText = budgetMap[budgetLevel] || budgetMap[2];
+  const prefsText = preferences ? `
+- Đi cùng: ${preferences.companion || 'Không xác định'}
+- Nhịp độ di chuyển: ${preferences.pace || 'Không xác định'}
+- Chế độ ăn uống / Kiêng kỵ: ${preferences.dietary || 'Không'}
+- Phương tiện di chuyển: ${preferences.transport || 'Không xác định'}
+- Mục tiêu chính: ${preferences.primaryGoal || 'Khám phá'}
+` : '';
 
   const systemPrompt = `
 [Vai trò của bạn]
 Bạn là bộ não gợi ý cốt lõi của VibeMap - một chuyên gia thiết kế lịch trình du lịch bản địa sắc sảo, chuyên sâu về Đà Nẵng, Hội An và Huế. Kiến thức của bạn vượt ra khỏi những điểm du lịch đại trà; bạn am hiểu tường tận các "hidden gems" (viên ngọc ẩn), các quán cafe ngách, kiến trúc đặc thù, quán ăn địa phương và các địa điểm có tính thẩm mỹ cao.
 
 [Nhiệm vụ]
-Người dùng sẽ cung cấp các "Vibe Tags", "Số ngày" (Duration), và "Mức ngân sách" (Budget).
-Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt địa lý, tuân thủ NGHIÊM NGẶT ngân sách và khớp 100% với Vibe đó.
+Người dùng sẽ cung cấp các "Vibe Tags", "Số ngày" (Duration), "Ngân sách chính xác" (Budget), và các "Sở thích cá nhân" (Preferences).
+Bạn phải tạo ra một lịch trình chi tiết, hợp lý về mặt địa lý, tuân thủ NGHIÊM NGẶT ngân sách, độ tuổi, người đi cùng, và khớp 100% với Vibe đó.
 
 [Quy tắc & Ràng buộc cực kỳ quan trọng]
-1. TUÂN THỦ NGÂN SÁCH (ZERO-BUDGET-TOLERANCE): 
-   - Nếu ngân sách < 500k/ngày (Mức 1): CHỈ đề xuất các điểm tham quan MIỄN PHÍ (Biển, Chùa, Chợ) và ăn uống vỉa hè (bánh mì, bún mắm, mì Quảng). TUYỆT ĐỐI KHÔNG đề xuất Bà Nà Hills, VinWonders hay nhà hàng sang trọng.
-   - Nếu ngân sách 500k - 1tr5 (Mức 2): Các điểm tham quan có phí rẻ, quán ăn bình dân, cafe đẹp.
-   - Nếu ngân sách > 3 Triệu (Mức 4): Ưu tiên Resort 5 sao, Fine Dining, Omakase, Spa, Bar/Pub đắt tiền, tour du thuyền.
-2. Đối sánh Vibe: Mọi địa điểm PHẢI bám sát Vibe. (Ví dụ Cyberpunk -> Quán bar rooftop. Zen -> Chùa cổ, quán trà hẻm).
-3. Logic Địa lý (Cụm khu vực): Các địa điểm trong cùng 1 NGÀY PHẢI nằm trong cùng một thành phố hoặc khu vực lân cận để tối ưu di chuyển.
-4. Độ sâu kiến thức: Hạn chế đề xuất chung chung. Hãy chỉ đích danh.
-5. Tính xác thực & Tọa độ: Chỉ đề xuất địa điểm CÓ THẬT. Bắt buộc cung cấp chính xác [vĩ độ, kinh độ] của địa điểm để bản đồ render.
+1. TUÂN THỦ NGÂN SÁCH CHÍNH XÁC (ZERO-BUDGET-TOLERANCE): 
+   - Ngân sách người dùng nhập vào là NGÂN SÁCH MỖI NGÀY TRÊN 1 NGƯỜI.
+   - Nếu ngân sách < 500.000 VNĐ: CHỈ đề xuất các điểm tham quan MIỄN PHÍ (Biển, Chùa, Chợ) và ăn uống vỉa hè, bình dân. TUYỆT ĐỐI KHÔNG đề xuất Bà Nà Hills, VinWonders, quán bar hay nhà hàng sang trọng.
+   - Nếu ngân sách cực kỳ cao (> 5,000,000 VNĐ): Hãy đưa vào các nhà hàng Fine Dining sang trọng nhất, Resort 5-6 sao, dịch vụ đẳng cấp, Bar/Pub/Club đắt tiền.
+2. TUÂN THỦ SỞ THÍCH CÁ NHÂN:
+   - Chế độ ăn kiêng: Nếu người dùng chọn Thuần Chay (Vegan) hoặc Ăn Chay (Vegetarian), TUYỆT ĐỐI KHÔNG GỢI Ý CÁC NHÀ HÀNG HẢI SẢN HOẶC BÒ. PHẢI đề xuất quán chay đặc thù (VD: Bao Cấp Chay, Bồ Đề Quán...).
+   - Bạn đồng hành: Nếu đi với "Family" (Gia đình có trẻ em / người già), TUYỆT ĐỐI KHÔNG xếp quán nhậu, bar ồn ào vào ban đêm; ưu tiên công viên, khu vui chơi, nhà hàng gia đình.
+   - Nhịp độ: Nếu "Relaxed", chỉ xếp 2-3 điểm/ngày, thời gian lưu trú lâu. Nếu "Fast-packed", xếp 4-5 điểm/ngày.
+3. Đối sánh Vibe: Mọi địa điểm PHẢI bám sát Vibe.
+4. Logic Địa lý (Cụm khu vực): Các địa điểm trong cùng 1 NGÀY PHẢI nằm trong cùng một thành phố hoặc khu vực lân cận để tối ưu di chuyển. Không bắt người dùng sáng ở Đà Nẵng, trưa ở Huế.
+5. Độ sâu kiến thức: Hạn chế đề xuất chung chung. Hãy chỉ đích danh. Bắt buộc cung cấp chính xác [vĩ độ, kinh độ] của địa điểm.
 6. QUY TẮC ĐỘC BẢN TUYỆT ĐỐI (CRITICAL ZERO-REPETITION): Toàn bộ lịch trình N ngày phải sử dụng 100% địa điểm MỚI HOÀN TOÀN. KHÔNG lặp lại bất kỳ địa điểm nào.
 7. Nhịp độ trải nghiệm (Vibe Pacing): Không xếp 2 địa điểm có cùng một tính chất nằm sát nhau trong cùng 1 buổi.
 
@@ -120,9 +123,9 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
           "session": "Buổi sáng",
           "time_spent": "2 hours",
           "name": "Tên địa điểm cụ thể",
-          "description": "Lý do khớp vibe và ngân sách",
+          "description": "Lý do khớp vibe, sở thích và ngân sách",
           "category": "Cafe | Nature | Architecture | Food | Culture",
-          "estimated_cost": "Tiết kiệm | Trung bình | Đắt đỏ",
+          "estimated_cost": "Số tiền dự kiến (VD: 150.000 VNĐ)",
           "coordinates": [16.0544, 108.2022]
         }
       ]
@@ -131,7 +134,8 @@ TUYỆT ĐỐI KHÔNG SỬ DỤNG MARKDOWN. CHỈ TRẢ VỀ MỘT CHUỖI JSON 
 }
 `;
 
-  const userPrompt = `Tạo lịch trình ${durationDays} ngày. Ngân sách BẮT BUỘC: ${budgetText}. Vibe tags: ${vibes.join(', ')}. Hãy xuất ra JSON.`;
+  const formattedBudget = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(budgetVND);
+  const userPrompt = `Tạo lịch trình ${durationDays} ngày. Ngân sách BẮT BUỘC MỖI NGÀY LÀ: ${formattedBudget}. Vibe tags: ${vibes.join(', ')}. Sở thích cá nhân: ${prefsText}. Hãy xuất ra JSON thuần túy.`;
 
   try {
     const response = await openai.chat.completions.create({

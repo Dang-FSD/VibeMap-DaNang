@@ -3,18 +3,29 @@ import { generateItinerary as generateMockItinerary } from '../services/matching
 
 export const analyzeImage = async (req, res) => {
   try {
-    const { image, duration, budget } = req.body;
+    const { image, duration, durationDays, budgetVND, mood, preferences } = req.body;
     
+    // Ensure we have a valid duration number
+    const finalDuration = durationDays || duration || 3;
+    const finalBudget = budgetVND || 1500000; // default 1.5m VND
+
     // 1. Analyze Vibes
     const vibes = await analyzeImageVibe(image);
     
+    // If user provided a mood, we can prepend it to the AI detected vibes to strengthen it
+    if (mood) {
+      if (!vibes.includes(mood)) {
+        vibes.unshift(mood);
+      }
+    }
+    
     // 2. Generate Smart Itinerary using AI directly
-    let itinerary = await generateAIItinerary(vibes, duration || 3, budget || 2);
+    let itinerary = await generateAIItinerary(vibes, finalDuration, finalBudget, preferences);
     
     // 3. Fallback to Mock if AI fails
     if (!itinerary) {
       console.warn("Falling back to matchingService mock due to AI failure or missing API key.");
-      itinerary = await generateMockItinerary(vibes, duration || 3, budget || 2);
+      itinerary = await generateMockItinerary(vibes, finalDuration, finalBudget);
     }
 
     res.json({ vibes, itinerary });

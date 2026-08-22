@@ -8,9 +8,20 @@ export default function Dashboard() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [isScanning, setIsScanning] = useState(false);
-  const [budget, setBudget] = useState(2);
-  const [duration, setDuration] = useState(3);
+  
   const [imageBase64, setImageBase64] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [budgetVND, setBudgetVND] = useState(1500000);
+  const [mood, setMood] = useState('chill');
+  
+  const [preferences, setPreferences] = useState({
+    companion: 'solo',
+    pace: 'moderate',
+    dietary: 'none',
+    transport: 'motorbike',
+    primaryGoal: 'exploration'
+  });
 
   const handleLanguageToggle = () => {
     const newLang = i18n.language === 'en' ? 'vi' : 'en';
@@ -34,9 +45,31 @@ export default function Dashboard() {
       return;
     }
     
+    if (!startDate || !endDate) {
+      alert('Please select start and end dates.');
+      return;
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (start > end) {
+      alert('End date must be after start date.');
+      return;
+    }
+    
+    const diffTime = Math.abs(end - start);
+    const durationDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
     setIsScanning(true);
     try {
-      const result = await analyzeMoodboard(imageBase64, duration, budget);
+      const payload = {
+        image: imageBase64,
+        durationDays,
+        budgetVND: Number(budgetVND),
+        mood,
+        preferences
+      };
+      const result = await analyzeMoodboard(payload);
       // Navigate to planner with the result
       navigate('/planner', { state: { itinerary: result.itinerary, vibes: result.vibes } });
     } catch (error) {
@@ -47,9 +80,14 @@ export default function Dashboard() {
     }
   };
 
+  const handlePrefChange = (e) => {
+    const { name, value } = e.target;
+    setPreferences(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white p-6 md:p-12">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-center mb-12">
           <h1 className="text-3xl font-bold tracking-tight text-primary">VibeMap Danang</h1>
           <div className="flex gap-4 items-center">
@@ -86,17 +124,97 @@ export default function Dashboard() {
             )}
           </label>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 z-10 relative">
-            <div>
-              <label className="block text-sm font-semibold mb-4">{t('dashboard.budget')}</label>
-              <input type="range" min="1" max="4" value={budget} onChange={(e) => setBudget(e.target.value)} className="w-full accent-primary" />
-              <div className="text-center font-bold text-primary mt-3 text-sm bg-primary/10 py-2 rounded-lg border border-primary/20">
-                {t(`dashboard.budget_level_${budget}`)}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            {/* Core Settings */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">Trip Settings</h3>
+              
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <label className="block text-sm font-semibold mb-2">Start Date</label>
+                  <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none" />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-semibold mb-2">End Date</label>
+                  <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-2">Budget per day (VND)</label>
+                <div className="relative">
+                  <input type="number" min="0" step="100000" value={budgetVND} onChange={(e) => setBudgetVND(e.target.value)} className="w-full p-3 pl-4 pr-16 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none font-bold" />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">VNĐ</span>
+                </div>
+                <p className="text-xs text-slate-500 mt-2">Example: 1500000 = 1.5 Million VND / day</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-2">Current Mood</label>
+                <select value={mood} onChange={(e) => setMood(e.target.value)} className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none">
+                  <option value="chill">Chill & Relaxing</option>
+                  <option value="adventurous">Adventurous & Active</option>
+                  <option value="romantic">Romantic & Intimate</option>
+                  <option value="cultural">Cultural & Historic</option>
+                  <option value="party">Nightlife & Party</option>
+                </select>
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-4">{t('dashboard.duration')} ({duration})</label>
-              <input type="range" min="1" max="14" value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full accent-primary" />
+
+            {/* Travel Preferences */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold border-b border-slate-200 dark:border-slate-700 pb-2">Travel Preferences</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Who's traveling?</label>
+                  <select name="companion" value={preferences.companion} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
+                    <option value="solo">Solo</option>
+                    <option value="couple">Couple</option>
+                    <option value="family">Family (with kids/elders)</option>
+                    <option value="friends">Group of Friends</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Pace</label>
+                  <select name="pace" value={preferences.pace} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
+                    <option value="relaxed">Relaxed (2-3 places/day)</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="fast">Fast-packed (Explore all!)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Dietary</label>
+                  <select name="dietary" value={preferences.dietary} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
+                    <option value="none">No restrictions</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="halal">Halal</option>
+                    <option value="no-seafood">Seafood Allergy</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Transport</label>
+                  <select name="transport" value={preferences.transport} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
+                    <option value="motorbike">Motorbike Rental</option>
+                    <option value="grab">Taxi / Grab</option>
+                    <option value="walking">Walking / Bicycle</option>
+                  </select>
+                </div>
+                
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold mb-2 text-slate-600 dark:text-slate-400">Primary Goal</label>
+                  <select name="primaryGoal" value={preferences.primaryGoal} onChange={handlePrefChange} className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 outline-none text-sm">
+                    <option value="exploration">Exploration & Sightseeing</option>
+                    <option value="relaxation">Relaxation & Healing</option>
+                    <option value="food">Food Tour</option>
+                    <option value="photography">Photography / Check-ins</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 

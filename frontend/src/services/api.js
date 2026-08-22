@@ -28,11 +28,11 @@ export const register = async (name, email, password) => {
 };
 
 // --- AI SERVICE ---
-export const analyzeMoodboard = async (base64Image, duration, budget) => {
+export const analyzeMoodboard = async (payload) => {
   const response = await fetch(`${API_URL}/ai/analyze`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ image: base64Image, duration, budget })
+    body: JSON.stringify(payload)
   });
   
   if (!response.ok) {
