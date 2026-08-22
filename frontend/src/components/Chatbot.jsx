@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { chatWithAI } from '../services/api';
 import { Send, X, MessageSquare, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +74,17 @@ export default function Chatbot() {
             {messages.map((msg, index) => (
               <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-primary text-white rounded-tr-sm' : 'bg-slate-100 dark:bg-slate-800 dark:text-slate-200 rounded-tl-sm'}`}>
-                  {msg.content}
+                  <ReactMarkdown
+                    components={{
+                      p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc ml-4 mb-2" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal ml-4 mb-2" {...props} />,
+                      li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                      strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
                 </div>
               </div>
             ))}
