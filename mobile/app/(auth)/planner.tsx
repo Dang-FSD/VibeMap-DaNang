@@ -53,13 +53,13 @@ export default function Planner() {
           <View key={idx} style={styles.dayCard}>
             <Text style={styles.dayTitle}>Day {day.day}: {day.theme}</Text>
             
-            {day.activities.map((act, actIdx) => (
-              <View key={actIdx} style={styles.activityItem}>
-                <Text style={styles.time}>{act.time}</Text>
+            {day.locations && day.locations.map((loc, locIdx) => (
+              <View key={locIdx} style={styles.activityItem}>
+                <Text style={styles.time}>{loc.duration || '2 hrs'}</Text>
                 <View style={styles.actContent}>
-                  <Text style={styles.actName}>{act.name}</Text>
-                  <Text style={styles.actLocation}>{act.location}</Text>
-                  <Text style={styles.actDesc}>{act.description}</Text>
+                  <Text style={styles.actName}>{loc.name}</Text>
+                  <Text style={styles.actLocation}>{loc.category || 'Location'}</Text>
+                  <Text style={styles.actDesc}>{loc.description}</Text>
                 </View>
               </View>
             ))}
