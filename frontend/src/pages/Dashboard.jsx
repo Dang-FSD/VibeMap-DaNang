@@ -9,7 +9,6 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [isScanning, setIsScanning] = useState(false);
   
-  const [imageBase64, setImageBase64] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [budgetVND, setBudgetVND] = useState(1500000);
@@ -28,23 +27,7 @@ export default function Dashboard() {
     i18n.changeLanguage(newLang);
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageBase64(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleAnalyze = async () => {
-    if (!imageBase64) {
-      alert(t('dashboard.upload_placeholder') || 'Please upload an image first!');
-      return;
-    }
-    
     if (!startDate || !endDate) {
       alert('Please select start and end dates.');
       return;
@@ -63,7 +46,6 @@ export default function Dashboard() {
     setIsScanning(true);
     try {
       const payload = {
-        image: imageBase64,
         durationDays,
         budgetVND: Number(budgetVND),
         mood,
@@ -105,24 +87,6 @@ export default function Dashboard() {
             <h2 className="text-4xl font-extrabold mb-4">{t('dashboard.title')}</h2>
             <p className="text-slate-500 dark:text-slate-400 text-lg">{t('dashboard.subtitle')}</p>
           </div>
-
-          <label className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-12 text-center hover:border-primary transition-colors cursor-pointer mb-8 bg-slate-50 dark:bg-slate-900/50 block relative overflow-hidden">
-            <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
-            {imageBase64 ? (
-              <div className="absolute inset-0">
-                <img src={imageBase64} alt="Uploaded moodboard" className="w-full h-full object-cover opacity-60" />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <span className="text-white font-bold text-xl">{t('dashboard.change_image')}</span>
-                </div>
-              </div>
-            ) : (
-              <>
-                <span className="material-symbols-outlined text-6xl text-slate-400 mb-4">cloud_upload</span>
-                <h3 className="text-xl font-bold mb-2">{t('dashboard.upload_placeholder')}</h3>
-                <p className="text-slate-500">{t('dashboard.upload_button')}</p>
-              </>
-            )}
-          </label>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             {/* Core Settings */}

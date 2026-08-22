@@ -10,13 +10,20 @@ export const analyzeImage = async (req, res) => {
     const finalBudget = budgetVND || 1500000; // default 1.5m VND
 
     // 1. Analyze Vibes
-    const vibes = await analyzeImageVibe(image);
+    let vibes = [];
+    if (image) {
+      vibes = await analyzeImageVibe(image);
+    }
     
     // If user provided a mood, we can prepend it to the AI detected vibes to strengthen it
     if (mood) {
       if (!vibes.includes(mood)) {
         vibes.unshift(mood);
       }
+    }
+    
+    if (vibes.length === 0) {
+      vibes = ['chill']; // Ultimate fallback
     }
     
     // 2. Generate Smart Itinerary using AI directly
