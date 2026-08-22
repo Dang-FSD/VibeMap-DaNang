@@ -7,10 +7,11 @@ export default function Planner() {
   const router = useRouter();
   const { result } = useLocalSearchParams();
   
-  let data = null;
+  let data: any = null;
   try {
     if (result) {
-      data = JSON.parse(result);
+      const resultStr = Array.isArray(result) ? result[0] : result;
+      data = JSON.parse(resultStr);
     }
   } catch(e) {}
 
@@ -49,11 +50,11 @@ export default function Planner() {
           <Text style={styles.subheader}>Vibes: {data.vibes.join(', ')}</Text>
         )}
 
-        {data.itinerary && data.itinerary.map((day, idx) => (
+        {data.itinerary && data.itinerary.map((day: any, idx: number) => (
           <View key={idx} style={styles.dayCard}>
             <Text style={styles.dayTitle}>Day {day.day}: {day.theme}</Text>
             
-            {day.locations && day.locations.map((loc, locIdx) => (
+            {day.locations && day.locations.map((loc: any, locIdx: number) => (
               <View key={locIdx} style={styles.activityItem}>
                 <Text style={styles.time}>{loc.duration || '2 hrs'}</Text>
                 <View style={styles.actContent}>
