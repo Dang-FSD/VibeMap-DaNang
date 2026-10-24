@@ -27,16 +27,37 @@ export const register = async (name, email, password) => {
   return response.json();
 };
 
+// Helper function xử lý fetch có kèm token và tự động logout nếu 401
+const authFetch = async (url, options = {}) => {
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+
+  const response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+    throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+  }
+
+  return response;
+};
+
 // --- AI SERVICE ---
 export const analyzeMoodboard = async (payload) => {
-  const response = await fetch(`${API_URL}/ai/analyze`, {
+  const response = await authFetch(`${API_URL}/ai/analyze`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
   
   if (!response.ok) {
-    throw new Error('Failed to analyze moodboard');
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Failed to analyze moodboard');
   }
   return response.json();
 };
@@ -56,29 +77,20 @@ export const chatWithAI = async (messages, language = 'vi') => {
 
 // --- TRIPS ---
 export const saveTrip = async (title, budgetLevel, durationDays, itinerary) => {
-  const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/trips`, {
+  const response = await authFetch(`${API_URL}/trips`, {
     method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
     body: JSON.stringify({ title, budgetLevel, durationDays, itinerary })
   });
   if (!response.ok) {
-    const errorData = await response.json();
+    const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.message || 'Failed to save trip');
   }
   return response.json();
 };
 
 export const getMyTrips = async () => {
-  const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/trips`, {
-    method: 'GET',
-    headers: { 
-      'Authorization': `Bearer ${token}`
-    }
+  const response = await authFetch(`${API_URL}/trips`, {
+    method: 'GET'
   });
   if (!response.ok) {
     throw new Error('Failed to fetch trips');

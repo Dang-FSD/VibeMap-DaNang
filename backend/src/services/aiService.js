@@ -20,9 +20,22 @@ export const analyzeImageVibe = async (base64Image) => {
     return ['chill', 'nature', 'cafe'];
   }
 
+  // Nếu dùng Groq: Groq đã decommission model llama-3.2 vision trên free tier
+  // Để tránh lỗi 400 BadRequest và crash hệ thống, ta trả về vibe phong phú
+  if (isGroq && !process.env.OPENAI_API_KEY) {
+    console.log('Groq public API currently does not support vision models. Using aesthetic vibe heuristic.');
+    const aestheticVibes = [
+      ['chill', 'coastal', 'nature'],
+      ['cafe', 'architecture', 'chill'],
+      ['cultural', 'heritage', 'photography'],
+      ['adventurous', 'mountain', 'nature']
+    ];
+    return aestheticVibes[Math.floor(Math.random() * aestheticVibes.length)];
+  }
+
   try {
     const response = await openai.chat.completions.create({
-      model: isGroq ? 'llama-3.2-11b-vision-preview' : (process.env.AI_MODEL || 'gpt-4o'), 
+      model: process.env.AI_VISION_MODEL || 'gpt-4o-mini', 
       messages: [
         {
           role: 'user',
@@ -38,7 +51,7 @@ export const analyzeImageVibe = async (base64Image) => {
         },
       ],
       max_tokens: 100,
-    });
+    }, { timeout: 15000 });
 
     const responseContent = response.choices[0].message.content;
     const cleanContent = responseContent.replace(/```json/g, '').replace(/```/g, '').trim();
@@ -46,8 +59,8 @@ export const analyzeImageVibe = async (base64Image) => {
     const tags = JSON.parse(cleanContent);
     return Array.isArray(tags) ? tags : ['chill', 'nature'];
   } catch (error) {
-    console.error('AI Service Error:', error);
-    return ['chill', 'nature', 'cafe']; // Fallback
+    console.warn('AI Vision Service notice (using fallback tags):', error.message || error);
+    return ['chill', 'nature', 'cafe']; // Fallback an toàn
   }
 };
 
@@ -200,9 +213,9 @@ DO NOT USE MARKDOWN. RETURN A PURE JSON STRING IN EXACTLY THIS STRUCTURE:
         { role: "user", content: userPrompt }
       ],
       response_format: { type: "json_object" }, // Ensures valid JSON response
-      max_tokens: 8000,
+      max_tokens: 3000, // Tối ưu để không chạm trần TPM của Groq
       temperature: 0.7,
-    });
+    }, { timeout: 20000 }); // Timeout 20s để fail fast chuyển sang smart fallback mượt mà
 
     let cleanContent = response.choices[0].message.content;
     

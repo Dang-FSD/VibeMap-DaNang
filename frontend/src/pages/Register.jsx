@@ -17,8 +17,13 @@ export default function Register() {
     e.preventDefault();
     setError('');
     
+    if (password.length < 8) {
+      setError(i18n.language === 'en' ? 'Password must be at least 8 characters' : 'Mật khẩu phải có ít nhất 8 ký tự');
+      return;
+    }
+
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(i18n.language === 'en' ? 'Passwords do not match' : 'Mật khẩu xác nhận không khớp');
       return;
     }
 

@@ -5,7 +5,12 @@ export const protect = async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        console.error('CRITICAL: JWT_SECRET is not configured in environment variables');
+        return res.status(500).json({ message: 'Server configuration error' });
+      }
+      const decoded = jwt.verify(token, secret);
       req.user = decoded; // { id }
       next();
     } catch (error) {

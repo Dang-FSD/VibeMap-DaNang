@@ -2,7 +2,7 @@ services:
   # 1. Backend Service (API)
   - type: web
     name: vibemap-backend
-    env: node
+    runtime: node
     plan: free
     buildCommand: npm install
     startCommand: npm start -w backend
@@ -11,13 +11,22 @@ services:
         value: 10000
       - key: MONGO_URI
         sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: GROQ_API
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
 
   # 2. Frontend Service (Trang web)
   - type: web
     name: vibemap-frontend
-    env: static
+    runtime: static
     buildCommand: npm install && npm run build -w frontend
     staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
     routes:
       - type: rewrite
         source: /*
