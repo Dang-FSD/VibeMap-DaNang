@@ -84,9 +84,9 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB and start server
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+// Khởi động server lắng nghe PORT để Render không bị crash khi deploy
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  // Kết nối MongoDB trong nền
+  connectDB();
 });
